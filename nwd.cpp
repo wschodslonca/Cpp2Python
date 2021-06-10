@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-int NWD(int a, int b){
+int nwd(int a, int b){
 	
 	while(a!=b){
 		if(a>b){
@@ -16,5 +16,4 @@ int main(){
 	
 	int number1 = 72;
 	int number2 = 84;
-	cout<<" NWD = "<<NWD(number1,number2);
 }

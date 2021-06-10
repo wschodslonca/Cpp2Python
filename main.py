@@ -14,7 +14,7 @@ class Translator:
         self.translated_code = ""
 
     def import_code_file(self):
-        self.input_file = open("test2.txt", "rt")
+        self.input_file = open("nwd.cpp", "rt")
         self.input_code = self.input_file.read()
 
     def write_to_output(self):
