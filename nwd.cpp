@@ -1,5 +1,3 @@
-// Plik testowy .cpp to .py
-
 #include<iostream>
 using namespace std;
 

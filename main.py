@@ -2,6 +2,7 @@ from antlr4 import *
 from GrammarLexer import GrammarLexer
 from GrammarParser import GrammarParser
 from GrammarListener import GrammarListener
+from GrammarListenerImp import GrammarListenerImp
 
 class Translator:
     # Class that converts .cpp to .py
@@ -9,12 +10,12 @@ class Translator:
 
         self.input_file = None
         self.result_file = "output.py"
-        self.lines = []
+        self.input_code = ""
         self.translated_code = ""
 
     def import_code_file(self):
-        self.input_file = open("nwd.cpp", "rt")
-        self.lines = self.input_file.readlines()
+        self.input_file = open("test.cpp", "rt")
+        self.input_code = self.input_file.read()
 
     def write_to_output(self):
         output = open(self.result_file, "w")
@@ -22,8 +23,15 @@ class Translator:
         output.close()
 
     def cpp2py(self):
-        for line in self.lines:
-            print(line)
+        lexer = GrammarLexer(InputStream(self.input_code))
+        stream = CommonTokenStream(lexer)
+        parser = GrammarParser(stream)
+        tree = parser.program()
+        walker = ParseTreeWalker()
+        listener = GrammarListenerImp()
+        walker.walk(listener,tree)
+        self.translated_code = listener.c
+
 
 
 def main():
@@ -31,7 +39,6 @@ def main():
     translator.import_code_file()
     translator.cpp2py()
     translator.write_to_output()
-
 
 if __name__ == '__main__':
     main()

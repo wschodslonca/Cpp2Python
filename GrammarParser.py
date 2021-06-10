@@ -3,11 +3,10 @@
 from antlr4 import *
 from io import StringIO
 import sys
-
 if sys.version_info[1] > 5:
-    from typing import TextIO
+	from typing import TextIO
 else:
-    from typing.io import TextIO
+	from typing.io import TextIO
 
 
 def serializedATN():
@@ -140,41 +139,42 @@ def serializedATN():
         return buf.getvalue()
 
 
-class GrammarParser(Parser):
+class GrammarParser ( Parser ):
+
     grammarFileName = "Grammar.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
+    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = ["<INVALID>", "'.'", "','", "';'", "'\u00E2\u20AC\u2122'",
-                    "'\u00E2\u20AC\u0165'", "':'", "'::'", "'#'", "'//'",
-                    "'('", "')'", "'['", "']'", "'{'", "'}'", "'<'", "'>'",
-                    "'<='", "'>='", "'+'", "'-'", "'*'", "'/'", "'%'",
-                    "'='", "'&&'", "'||'", "'!'", "'!='", "'=='", "'++'",
-                    "'--'", "'+='", "'-='", "'*='", "'/='", "'\n'", "<INVALID>",
-                    "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>",
-                    "<INVALID>", "<INVALID>", "'int'", "'float'", "'double'",
-                    "'long'", "'char'", "'string'", "'bool'", "'void'",
-                    "'if'", "'else'", "'else if'", "'while'", "'for'",
-                    "'break'", "'continue'", "'return'", "'main'", "'true'",
-                    "'false'", "<INVALID>", "'#include<iostream>'", "'using namespace std'"]
+    literalNames = [ "<INVALID>", "'.'", "','", "';'", "'\u00E2\u20AC\u2122'", 
+                     "'\u00E2\u20AC\u0165'", "':'", "'::'", "'#'", "'//'", 
+                     "'('", "')'", "'['", "']'", "'{'", "'}'", "'<'", "'>'", 
+                     "'<='", "'>='", "'+'", "'-'", "'*'", "'/'", "'%'", 
+                     "'='", "'&&'", "'||'", "'!'", "'!='", "'=='", "'++'", 
+                     "'--'", "'+='", "'-='", "'*='", "'/='", "'\n'", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "'int'", "'float'", "'double'", 
+                     "'long'", "'char'", "'string'", "'bool'", "'void'", 
+                     "'if'", "'else'", "'else if'", "'while'", "'for'", 
+                     "'break'", "'continue'", "'return'", "'main'", "'true'", 
+                     "'false'", "<INVALID>", "'#include<iostream>'", "'using namespace std'" ]
 
-    symbolicNames = ["<INVALID>", "DOT", "COMMA", "SEMICOLON", "APOSTROPHE",
-                     "QUOTE", "COLON", "DOUBLE_COLON", "HASH", "COMMENTS",
-                     "LEFT_BRACKET", "RIGHT_BRACKET", "SQR_LEFT_BRACKET",
-                     "SQR_RIGHT_BRACKET", "CURLY_LEFT_BRACKET", "CURLY_RIGHT_BRACKET",
-                     "LE", "GE", "LEQ", "GEQ", "PLUS", "MINUS", "MUL",
-                     "DIV", "MOD", "ASSIGN", "AND", "OR", "NOT", "NOT_EQ",
-                     "EQ", "PP", "MM", "PEQ", "MINEQ", "MULEQ", "DIVEQ",
-                     "NEW_LINE", "DIGIT", "NONDIGIT", "CHARACTER", "ID",
-                     "TEXT", "NATURAL", "NUMBER", "INT", "FLOAT", "DOUBLE",
-                     "LONG", "CHAR", "STRING", "BOOL", "VOID", "IF", "ELSE",
-                     "ELSE_IF", "WHILE", "FOR", "BREAK", "CONTINUE", "RETURN",
-                     "MAIN", "TRUE", "FALSE", "BOOLS", "IOSTREAM", "STD",
-                     "INCLUDE"]
+    symbolicNames = [ "<INVALID>", "DOT", "COMMA", "SEMICOLON", "APOSTROPHE", 
+                      "QUOTE", "COLON", "DOUBLE_COLON", "HASH", "COMMENTS", 
+                      "LEFT_BRACKET", "RIGHT_BRACKET", "SQR_LEFT_BRACKET", 
+                      "SQR_RIGHT_BRACKET", "CURLY_LEFT_BRACKET", "CURLY_RIGHT_BRACKET", 
+                      "LE", "GE", "LEQ", "GEQ", "PLUS", "MINUS", "MUL", 
+                      "DIV", "MOD", "ASSIGN", "AND", "OR", "NOT", "NOT_EQ", 
+                      "EQ", "PP", "MM", "PEQ", "MINEQ", "MULEQ", "DIVEQ", 
+                      "NEW_LINE", "DIGIT", "NONDIGIT", "CHARACTER", "ID", 
+                      "TEXT", "NATURAL", "NUMBER", "INT", "FLOAT", "DOUBLE", 
+                      "LONG", "CHAR", "STRING", "BOOL", "VOID", "IF", "ELSE", 
+                      "ELSE_IF", "WHILE", "FOR", "BREAK", "CONTINUE", "RETURN", 
+                      "MAIN", "TRUE", "FALSE", "BOOLS", "IOSTREAM", "STD", 
+                      "INCLUDE" ]
 
     RULE_program = 0
     RULE_mainFunc = 1
@@ -204,92 +204,95 @@ class GrammarParser(Parser):
     RULE_arrayAssignment = 25
     RULE_params = 26
 
-    ruleNames = ["program", "mainFunc", "block", "blockElement", "exp",
-                 "expOp", "singleExp", "bracketsExp", "statement", "ifSt",
-                 "whileSt", "forSt", "returnSt", "identifierType", "funcType",
-                 "funcDec", "func", "assignment", "declaration", "varDec",
-                 "varAssignment", "varOp", "varOpVar", "arrayDec", "arrayInit",
-                 "arrayAssignment", "params"]
+    ruleNames =  [ "program", "mainFunc", "block", "blockElement", "exp", 
+                   "expOp", "singleExp", "bracketsExp", "statement", "ifSt", 
+                   "whileSt", "forSt", "returnSt", "identifierType", "funcType", 
+                   "funcDec", "func", "assignment", "declaration", "varDec", 
+                   "varAssignment", "varOp", "varOpVar", "arrayDec", "arrayInit", 
+                   "arrayAssignment", "params" ]
 
     EOF = Token.EOF
-    DOT = 1
-    COMMA = 2
-    SEMICOLON = 3
-    APOSTROPHE = 4
-    QUOTE = 5
-    COLON = 6
-    DOUBLE_COLON = 7
-    HASH = 8
-    COMMENTS = 9
-    LEFT_BRACKET = 10
-    RIGHT_BRACKET = 11
-    SQR_LEFT_BRACKET = 12
-    SQR_RIGHT_BRACKET = 13
-    CURLY_LEFT_BRACKET = 14
-    CURLY_RIGHT_BRACKET = 15
-    LE = 16
-    GE = 17
-    LEQ = 18
-    GEQ = 19
-    PLUS = 20
-    MINUS = 21
-    MUL = 22
-    DIV = 23
-    MOD = 24
-    ASSIGN = 25
-    AND = 26
-    OR = 27
-    NOT = 28
-    NOT_EQ = 29
-    EQ = 30
-    PP = 31
-    MM = 32
-    PEQ = 33
-    MINEQ = 34
-    MULEQ = 35
-    DIVEQ = 36
-    NEW_LINE = 37
-    DIGIT = 38
-    NONDIGIT = 39
-    CHARACTER = 40
-    ID = 41
-    TEXT = 42
-    NATURAL = 43
-    NUMBER = 44
-    INT = 45
-    FLOAT = 46
-    DOUBLE = 47
-    LONG = 48
-    CHAR = 49
-    STRING = 50
-    BOOL = 51
-    VOID = 52
-    IF = 53
-    ELSE = 54
-    ELSE_IF = 55
-    WHILE = 56
-    FOR = 57
-    BREAK = 58
-    CONTINUE = 59
-    RETURN = 60
-    MAIN = 61
-    TRUE = 62
-    FALSE = 63
-    BOOLS = 64
-    IOSTREAM = 65
-    STD = 66
-    INCLUDE = 67
+    DOT=1
+    COMMA=2
+    SEMICOLON=3
+    APOSTROPHE=4
+    QUOTE=5
+    COLON=6
+    DOUBLE_COLON=7
+    HASH=8
+    COMMENTS=9
+    LEFT_BRACKET=10
+    RIGHT_BRACKET=11
+    SQR_LEFT_BRACKET=12
+    SQR_RIGHT_BRACKET=13
+    CURLY_LEFT_BRACKET=14
+    CURLY_RIGHT_BRACKET=15
+    LE=16
+    GE=17
+    LEQ=18
+    GEQ=19
+    PLUS=20
+    MINUS=21
+    MUL=22
+    DIV=23
+    MOD=24
+    ASSIGN=25
+    AND=26
+    OR=27
+    NOT=28
+    NOT_EQ=29
+    EQ=30
+    PP=31
+    MM=32
+    PEQ=33
+    MINEQ=34
+    MULEQ=35
+    DIVEQ=36
+    NEW_LINE=37
+    DIGIT=38
+    NONDIGIT=39
+    CHARACTER=40
+    ID=41
+    TEXT=42
+    NATURAL=43
+    NUMBER=44
+    INT=45
+    FLOAT=46
+    DOUBLE=47
+    LONG=48
+    CHAR=49
+    STRING=50
+    BOOL=51
+    VOID=52
+    IF=53
+    ELSE=54
+    ELSE_IF=55
+    WHILE=56
+    FOR=57
+    BREAK=58
+    CONTINUE=59
+    RETURN=60
+    MAIN=61
+    TRUE=62
+    FALSE=63
+    BOOLS=64
+    IOSTREAM=65
+    STD=66
+    INCLUDE=67
 
-    def __init__(self, input: TokenStream, output: TextIO = sys.stdout):
+    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.9.2")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
+
+
+
     class ProgramContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -300,30 +303,36 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.STD, 0)
 
         def mainFunc(self):
-            return self.getTypedRuleContext(GrammarParser.MainFuncContext, 0)
+            return self.getTypedRuleContext(GrammarParser.MainFuncContext,0)
 
-        def funcDec(self, i: int = None):
+
+        def funcDec(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.FuncDecContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.FuncDecContext, i)
+                return self.getTypedRuleContext(GrammarParser.FuncDecContext,i)
 
-        def varDec(self, i: int = None):
+
+        def varDec(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.VarDecContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.VarDecContext, i)
+                return self.getTypedRuleContext(GrammarParser.VarDecContext,i)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_program
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterProgram"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterProgram" ):
                 listener.enterProgram(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitProgram"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
+
+
+
 
     def program(self):
 
@@ -337,25 +346,25 @@ class GrammarParser(Parser):
             self.match(GrammarParser.STD)
             self.state = 59
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input, 0, self._ctx)
-            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
-                if _alt == 1:
+            _alt = self._interp.adaptivePredict(self._input,0,self._ctx)
+            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1:
                     self.state = 56
-                    self.funcDec()
+                    self.funcDec() 
                 self.state = 61
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input, 0, self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,0,self._ctx)
 
             self.state = 65
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input, 1, self._ctx)
-            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
-                if _alt == 1:
+            _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
+            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1:
                     self.state = 62
-                    self.varDec()
+                    self.varDec() 
                 self.state = 67
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input, 1, self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
 
             self.state = 68
             self.mainFunc()
@@ -367,10 +376,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class MainFuncContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -387,7 +397,8 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.RIGHT_BRACKET, 0)
 
         def block(self):
-            return self.getTypedRuleContext(GrammarParser.BlockContext, 0)
+            return self.getTypedRuleContext(GrammarParser.BlockContext,0)
+
 
         def VOID(self):
             return self.getToken(GrammarParser.VOID, 0)
@@ -395,19 +406,22 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_mainFunc
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterMainFunc"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMainFunc" ):
                 listener.enterMainFunc(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitMainFunc"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMainFunc" ):
                 listener.exitMainFunc(self)
+
+
+
 
     def mainFunc(self):
 
         localctx = GrammarParser.MainFuncContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_mainFunc)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 70
@@ -419,9 +433,10 @@ class GrammarParser(Parser):
             self.state = 74
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la == GrammarParser.VOID:
+            if _la==GrammarParser.VOID:
                 self.state = 73
                 self.match(GrammarParser.VOID)
+
 
             self.state = 76
             self.match(GrammarParser.RIGHT_BRACKET)
@@ -435,10 +450,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class BlockContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -448,28 +464,32 @@ class GrammarParser(Parser):
         def CURLY_RIGHT_BRACKET(self):
             return self.getToken(GrammarParser.CURLY_RIGHT_BRACKET, 0)
 
-        def blockElement(self, i: int = None):
+        def blockElement(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.BlockElementContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.BlockElementContext, i)
+                return self.getTypedRuleContext(GrammarParser.BlockElementContext,i)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_block
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterBlock"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBlock" ):
                 listener.enterBlock(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitBlock"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBlock" ):
                 listener.exitBlock(self)
+
+
+
 
     def block(self):
 
         localctx = GrammarParser.BlockContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_block)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 79
@@ -477,19 +497,7 @@ class GrammarParser(Parser):
             self.state = 83
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 4)) & ~0x3f) == 0 and ((1 << (_la - 4)) & (
-                    (1 << (GrammarParser.APOSTROPHE - 4)) | (1 << (GrammarParser.QUOTE - 4)) | (
-                    1 << (GrammarParser.LEFT_BRACKET - 4)) | (1 << (GrammarParser.CURLY_LEFT_BRACKET - 4)) | (
-                            1 << (GrammarParser.NOT - 4)) | (1 << (GrammarParser.PP - 4)) | (
-                            1 << (GrammarParser.MM - 4)) | (1 << (GrammarParser.ID - 4)) | (
-                            1 << (GrammarParser.NUMBER - 4)) | (1 << (GrammarParser.INT - 4)) | (
-                            1 << (GrammarParser.FLOAT - 4)) | (1 << (GrammarParser.DOUBLE - 4)) | (
-                            1 << (GrammarParser.LONG - 4)) | (1 << (GrammarParser.CHAR - 4)) | (
-                            1 << (GrammarParser.STRING - 4)) | (1 << (GrammarParser.BOOL - 4)) | (
-                            1 << (GrammarParser.IF - 4)) | (1 << (GrammarParser.WHILE - 4)) | (
-                            1 << (GrammarParser.FOR - 4)) | (1 << (GrammarParser.BREAK - 4)) | (
-                            1 << (GrammarParser.CONTINUE - 4)) | (1 << (GrammarParser.RETURN - 4)) | (
-                            1 << (GrammarParser.BOOLS - 4)))) != 0):
+            while ((((_la - 4)) & ~0x3f) == 0 and ((1 << (_la - 4)) & ((1 << (GrammarParser.APOSTROPHE - 4)) | (1 << (GrammarParser.QUOTE - 4)) | (1 << (GrammarParser.LEFT_BRACKET - 4)) | (1 << (GrammarParser.CURLY_LEFT_BRACKET - 4)) | (1 << (GrammarParser.NOT - 4)) | (1 << (GrammarParser.PP - 4)) | (1 << (GrammarParser.MM - 4)) | (1 << (GrammarParser.ID - 4)) | (1 << (GrammarParser.NUMBER - 4)) | (1 << (GrammarParser.INT - 4)) | (1 << (GrammarParser.FLOAT - 4)) | (1 << (GrammarParser.DOUBLE - 4)) | (1 << (GrammarParser.LONG - 4)) | (1 << (GrammarParser.CHAR - 4)) | (1 << (GrammarParser.STRING - 4)) | (1 << (GrammarParser.BOOL - 4)) | (1 << (GrammarParser.IF - 4)) | (1 << (GrammarParser.WHILE - 4)) | (1 << (GrammarParser.FOR - 4)) | (1 << (GrammarParser.BREAK - 4)) | (1 << (GrammarParser.CONTINUE - 4)) | (1 << (GrammarParser.RETURN - 4)) | (1 << (GrammarParser.BOOLS - 4)))) != 0):
                 self.state = 80
                 self.blockElement()
                 self.state = 85
@@ -506,38 +514,46 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class BlockElementContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def exp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpContext,0)
+
 
         def SEMICOLON(self):
             return self.getToken(GrammarParser.SEMICOLON, 0)
 
         def statement(self):
-            return self.getTypedRuleContext(GrammarParser.StatementContext, 0)
+            return self.getTypedRuleContext(GrammarParser.StatementContext,0)
+
 
         def declaration(self):
-            return self.getTypedRuleContext(GrammarParser.DeclarationContext, 0)
+            return self.getTypedRuleContext(GrammarParser.DeclarationContext,0)
+
 
         def assignment(self):
-            return self.getTypedRuleContext(GrammarParser.AssignmentContext, 0)
+            return self.getTypedRuleContext(GrammarParser.AssignmentContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_blockElement
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterBlockElement"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBlockElement" ):
                 listener.enterBlockElement(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitBlockElement"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBlockElement" ):
                 listener.exitBlockElement(self)
+
+
+
 
     def blockElement(self):
 
@@ -546,7 +562,7 @@ class GrammarParser(Parser):
         try:
             self.state = 94
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input, 4, self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 88
@@ -582,10 +598,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ExpContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -596,24 +613,27 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.ID, 0)
 
         def func(self):
-            return self.getTypedRuleContext(GrammarParser.FuncContext, 0)
+            return self.getTypedRuleContext(GrammarParser.FuncContext,0)
+
 
         def LEFT_BRACKET(self):
             return self.getToken(GrammarParser.LEFT_BRACKET, 0)
 
-        def exp(self, i: int = None):
+        def exp(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.ExpContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.ExpContext, i)
+                return self.getTypedRuleContext(GrammarParser.ExpContext,i)
+
 
         def RIGHT_BRACKET(self):
             return self.getToken(GrammarParser.RIGHT_BRACKET, 0)
 
         def singleExp(self):
-            return self.getTypedRuleContext(GrammarParser.SingleExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.SingleExpContext,0)
 
-        def APOSTROPHE(self, i: int = None):
+
+        def APOSTROPHE(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.APOSTROPHE)
             else:
@@ -622,7 +642,7 @@ class GrammarParser(Parser):
         def CHARACTER(self):
             return self.getToken(GrammarParser.CHARACTER, 0)
 
-        def QUOTE(self, i: int = None):
+        def QUOTE(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.QUOTE)
             else:
@@ -635,20 +655,23 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.BOOLS, 0)
 
         def expOp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpOpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpOpContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_exp
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterExp"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExp" ):
                 listener.enterExp(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitExp"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExp" ):
                 listener.exitExp(self)
 
-    def exp(self, _p: int = 0):
+
+
+    def exp(self, _p:int=0):
         _parentctx = self._ctx
         _parentState = self.state
         localctx = GrammarParser.ExpContext(self, self._ctx, _parentState)
@@ -659,7 +682,7 @@ class GrammarParser(Parser):
             self.enterOuterAlt(localctx, 1)
             self.state = 112
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input, 5, self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
             if la_ == 1:
                 self.state = 97
                 self.match(GrammarParser.NUMBER)
@@ -712,12 +735,13 @@ class GrammarParser(Parser):
                 self.match(GrammarParser.BOOLS)
                 pass
 
+
             self._ctx.stop = self._input.LT(-1)
             self.state = 120
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input, 6, self._ctx)
-            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
-                if _alt == 1:
+            _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
+            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
@@ -730,10 +754,10 @@ class GrammarParser(Parser):
                     self.state = 115
                     self.expOp()
                     self.state = 116
-                    self.exp(7)
+                    self.exp(7) 
                 self.state = 122
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input, 6, self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -743,10 +767,11 @@ class GrammarParser(Parser):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class ExpOpContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -792,29 +817,27 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_expOp
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterExpOp"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExpOp" ):
                 listener.enterExpOp(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitExpOp"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExpOp" ):
                 listener.exitExpOp(self)
+
+
+
 
     def expOp(self):
 
         localctx = GrammarParser.ExpOpContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_expOp)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 123
             _la = self._input.LA(1)
-            if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & (
-                    (1 << GrammarParser.LE) | (1 << GrammarParser.GE) | (1 << GrammarParser.LEQ) | (
-                    1 << GrammarParser.GEQ) | (1 << GrammarParser.PLUS) | (1 << GrammarParser.MINUS) | (
-                            1 << GrammarParser.MUL) | (1 << GrammarParser.DIV) | (1 << GrammarParser.MOD) | (
-                            1 << GrammarParser.AND) | (1 << GrammarParser.OR) | (1 << GrammarParser.NOT_EQ) | (
-                            1 << GrammarParser.EQ))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << GrammarParser.LE) | (1 << GrammarParser.GE) | (1 << GrammarParser.LEQ) | (1 << GrammarParser.GEQ) | (1 << GrammarParser.PLUS) | (1 << GrammarParser.MINUS) | (1 << GrammarParser.MUL) | (1 << GrammarParser.DIV) | (1 << GrammarParser.MOD) | (1 << GrammarParser.AND) | (1 << GrammarParser.OR) | (1 << GrammarParser.NOT_EQ) | (1 << GrammarParser.EQ))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -827,10 +850,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class SingleExpContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -849,19 +873,22 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_singleExp
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterSingleExp"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSingleExp" ):
                 listener.enterSingleExp(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitSingleExp"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSingleExp" ):
                 listener.exitSingleExp(self)
+
+
+
 
     def singleExp(self):
 
         localctx = GrammarParser.SingleExpContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_singleExp)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.state = 131
             self._errHandler.sync(self)
@@ -877,7 +904,7 @@ class GrammarParser(Parser):
                 self.enterOuterAlt(localctx, 2)
                 self.state = 127
                 _la = self._input.LA(1)
-                if not (_la == GrammarParser.PP or _la == GrammarParser.MM):
+                if not(_la==GrammarParser.PP or _la==GrammarParser.MM):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -891,7 +918,7 @@ class GrammarParser(Parser):
                 self.match(GrammarParser.ID)
                 self.state = 130
                 _la = self._input.LA(1)
-                if not (_la == GrammarParser.PP or _la == GrammarParser.MM):
+                if not(_la==GrammarParser.PP or _la==GrammarParser.MM):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -908,10 +935,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class BracketsExpContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -919,7 +947,8 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.LEFT_BRACKET, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpContext,0)
+
 
         def RIGHT_BRACKET(self):
             return self.getToken(GrammarParser.RIGHT_BRACKET, 0)
@@ -927,13 +956,16 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_bracketsExp
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterBracketsExp"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBracketsExp" ):
                 listener.enterBracketsExp(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitBracketsExp"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBracketsExp" ):
                 listener.exitBracketsExp(self)
+
+
+
 
     def bracketsExp(self):
 
@@ -955,24 +987,29 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class StatementContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def ifSt(self):
-            return self.getTypedRuleContext(GrammarParser.IfStContext, 0)
+            return self.getTypedRuleContext(GrammarParser.IfStContext,0)
+
 
         def forSt(self):
-            return self.getTypedRuleContext(GrammarParser.ForStContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ForStContext,0)
+
 
         def whileSt(self):
-            return self.getTypedRuleContext(GrammarParser.WhileStContext, 0)
+            return self.getTypedRuleContext(GrammarParser.WhileStContext,0)
+
 
         def returnSt(self):
-            return self.getTypedRuleContext(GrammarParser.ReturnStContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ReturnStContext,0)
+
 
         def BREAK(self):
             return self.getToken(GrammarParser.BREAK, 0)
@@ -984,18 +1021,22 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.CONTINUE, 0)
 
         def block(self):
-            return self.getTypedRuleContext(GrammarParser.BlockContext, 0)
+            return self.getTypedRuleContext(GrammarParser.BlockContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_statement
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterStatement"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterStatement" ):
                 listener.enterStatement(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitStatement"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitStatement" ):
                 listener.exitStatement(self)
+
+
+
 
     def statement(self):
 
@@ -1055,29 +1096,32 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class IfStContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def IF(self):
             return self.getToken(GrammarParser.IF, 0)
 
-        def bracketsExp(self, i: int = None):
+        def bracketsExp(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.BracketsExpContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.BracketsExpContext, i)
+                return self.getTypedRuleContext(GrammarParser.BracketsExpContext,i)
 
-        def block(self, i: int = None):
+
+        def block(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.BlockContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.BlockContext, i)
+                return self.getTypedRuleContext(GrammarParser.BlockContext,i)
 
-        def ELSE_IF(self, i: int = None):
+
+        def ELSE_IF(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.ELSE_IF)
             else:
@@ -1089,19 +1133,22 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_ifSt
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterIfSt"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIfSt" ):
                 listener.enterIfSt(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitIfSt"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIfSt" ):
                 listener.exitIfSt(self)
+
+
+
 
     def ifSt(self):
 
         localctx = GrammarParser.IfStContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_ifSt)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 148
@@ -1113,7 +1160,7 @@ class GrammarParser(Parser):
             self.state = 157
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la == GrammarParser.ELSE_IF:
+            while _la==GrammarParser.ELSE_IF:
                 self.state = 151
                 self.match(GrammarParser.ELSE_IF)
                 self.state = 152
@@ -1127,7 +1174,7 @@ class GrammarParser(Parser):
             self.state = 162
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la == GrammarParser.ELSE:
+            if _la==GrammarParser.ELSE:
                 self.state = 160
                 self.match(GrammarParser.ELSE)
                 self.state = 161
@@ -1142,10 +1189,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class WhileStContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1153,21 +1201,26 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.WHILE, 0)
 
         def bracketsExp(self):
-            return self.getTypedRuleContext(GrammarParser.BracketsExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.BracketsExpContext,0)
+
 
         def block(self):
-            return self.getTypedRuleContext(GrammarParser.BlockContext, 0)
+            return self.getTypedRuleContext(GrammarParser.BlockContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_whileSt
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterWhileSt"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterWhileSt" ):
                 listener.enterWhileSt(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitWhileSt"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitWhileSt" ):
                 listener.exitWhileSt(self)
+
+
+
 
     def whileSt(self):
 
@@ -1189,10 +1242,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ForStContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1202,7 +1256,7 @@ class GrammarParser(Parser):
         def LEFT_BRACKET(self):
             return self.getToken(GrammarParser.LEFT_BRACKET, 0)
 
-        def SEMICOLON(self, i: int = None):
+        def SEMICOLON(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.SEMICOLON)
             else:
@@ -1212,36 +1266,43 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.RIGHT_BRACKET, 0)
 
         def block(self):
-            return self.getTypedRuleContext(GrammarParser.BlockContext, 0)
+            return self.getTypedRuleContext(GrammarParser.BlockContext,0)
+
 
         def varDec(self):
-            return self.getTypedRuleContext(GrammarParser.VarDecContext, 0)
+            return self.getTypedRuleContext(GrammarParser.VarDecContext,0)
+
 
         def varAssignment(self):
-            return self.getTypedRuleContext(GrammarParser.VarAssignmentContext, 0)
+            return self.getTypedRuleContext(GrammarParser.VarAssignmentContext,0)
 
-        def exp(self, i: int = None):
+
+        def exp(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.ExpContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.ExpContext, i)
+                return self.getTypedRuleContext(GrammarParser.ExpContext,i)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_forSt
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterForSt"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterForSt" ):
                 listener.enterForSt(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitForSt"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitForSt" ):
                 listener.exitForSt(self)
+
+
+
 
     def forSt(self):
 
         localctx = GrammarParser.ForStContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_forSt)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 168
@@ -1250,7 +1311,7 @@ class GrammarParser(Parser):
             self.match(GrammarParser.LEFT_BRACKET)
             self.state = 173
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input, 11, self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,11,self._ctx)
             if la_ == 1:
                 self.state = 170
                 self.varDec()
@@ -1263,33 +1324,26 @@ class GrammarParser(Parser):
                 self.state = 172
                 self.exp(0)
 
+
             self.state = 175
             self.match(GrammarParser.SEMICOLON)
             self.state = 177
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 4)) & ~0x3f) == 0 and ((1 << (_la - 4)) & (
-                    (1 << (GrammarParser.APOSTROPHE - 4)) | (1 << (GrammarParser.QUOTE - 4)) | (
-                    1 << (GrammarParser.LEFT_BRACKET - 4)) | (1 << (GrammarParser.NOT - 4)) | (
-                            1 << (GrammarParser.PP - 4)) | (1 << (GrammarParser.MM - 4)) | (
-                            1 << (GrammarParser.ID - 4)) | (1 << (GrammarParser.NUMBER - 4)) | (
-                            1 << (GrammarParser.BOOLS - 4)))) != 0):
+            if ((((_la - 4)) & ~0x3f) == 0 and ((1 << (_la - 4)) & ((1 << (GrammarParser.APOSTROPHE - 4)) | (1 << (GrammarParser.QUOTE - 4)) | (1 << (GrammarParser.LEFT_BRACKET - 4)) | (1 << (GrammarParser.NOT - 4)) | (1 << (GrammarParser.PP - 4)) | (1 << (GrammarParser.MM - 4)) | (1 << (GrammarParser.ID - 4)) | (1 << (GrammarParser.NUMBER - 4)) | (1 << (GrammarParser.BOOLS - 4)))) != 0):
                 self.state = 176
                 self.exp(0)
+
 
             self.state = 179
             self.match(GrammarParser.SEMICOLON)
             self.state = 181
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 4)) & ~0x3f) == 0 and ((1 << (_la - 4)) & (
-                    (1 << (GrammarParser.APOSTROPHE - 4)) | (1 << (GrammarParser.QUOTE - 4)) | (
-                    1 << (GrammarParser.LEFT_BRACKET - 4)) | (1 << (GrammarParser.NOT - 4)) | (
-                            1 << (GrammarParser.PP - 4)) | (1 << (GrammarParser.MM - 4)) | (
-                            1 << (GrammarParser.ID - 4)) | (1 << (GrammarParser.NUMBER - 4)) | (
-                            1 << (GrammarParser.BOOLS - 4)))) != 0):
+            if ((((_la - 4)) & ~0x3f) == 0 and ((1 << (_la - 4)) & ((1 << (GrammarParser.APOSTROPHE - 4)) | (1 << (GrammarParser.QUOTE - 4)) | (1 << (GrammarParser.LEFT_BRACKET - 4)) | (1 << (GrammarParser.NOT - 4)) | (1 << (GrammarParser.PP - 4)) | (1 << (GrammarParser.MM - 4)) | (1 << (GrammarParser.ID - 4)) | (1 << (GrammarParser.NUMBER - 4)) | (1 << (GrammarParser.BOOLS - 4)))) != 0):
                 self.state = 180
                 self.exp(0)
+
 
             self.state = 183
             self.match(GrammarParser.RIGHT_BRACKET)
@@ -1303,10 +1357,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ReturnStContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1314,7 +1369,8 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.RETURN, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpContext,0)
+
 
         def SEMICOLON(self):
             return self.getToken(GrammarParser.SEMICOLON, 0)
@@ -1322,13 +1378,16 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_returnSt
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterReturnSt"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterReturnSt" ):
                 listener.enterReturnSt(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitReturnSt"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitReturnSt" ):
                 listener.exitReturnSt(self)
+
+
+
 
     def returnSt(self):
 
@@ -1350,10 +1409,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class IdentifierTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1381,27 +1441,27 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_identifierType
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterIdentifierType"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIdentifierType" ):
                 listener.enterIdentifierType(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitIdentifierType"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIdentifierType" ):
                 listener.exitIdentifierType(self)
+
+
+
 
     def identifierType(self):
 
         localctx = GrammarParser.IdentifierTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_identifierType)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 190
             _la = self._input.LA(1)
-            if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & (
-                    (1 << GrammarParser.INT) | (1 << GrammarParser.FLOAT) | (1 << GrammarParser.DOUBLE) | (
-                    1 << GrammarParser.LONG) | (1 << GrammarParser.CHAR) | (1 << GrammarParser.STRING) | (
-                            1 << GrammarParser.BOOL))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << GrammarParser.INT) | (1 << GrammarParser.FLOAT) | (1 << GrammarParser.DOUBLE) | (1 << GrammarParser.LONG) | (1 << GrammarParser.CHAR) | (1 << GrammarParser.STRING) | (1 << GrammarParser.BOOL))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1414,15 +1474,17 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class FuncTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifierType(self):
-            return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext, 0)
+            return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext,0)
+
 
         def VOID(self):
             return self.getToken(GrammarParser.VOID, 0)
@@ -1430,13 +1492,16 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_funcType
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterFuncType"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFuncType" ):
                 listener.enterFuncType(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitFuncType"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFuncType" ):
                 listener.exitFuncType(self)
+
+
+
 
     def funcType(self):
 
@@ -1446,8 +1511,7 @@ class GrammarParser(Parser):
             self.state = 194
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GrammarParser.INT, GrammarParser.FLOAT, GrammarParser.DOUBLE, GrammarParser.LONG,
-                         GrammarParser.CHAR, GrammarParser.STRING, GrammarParser.BOOL]:
+            if token in [GrammarParser.INT, GrammarParser.FLOAT, GrammarParser.DOUBLE, GrammarParser.LONG, GrammarParser.CHAR, GrammarParser.STRING, GrammarParser.BOOL]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 192
                 self.identifierType()
@@ -1468,15 +1532,17 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class FuncDecContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def funcType(self):
-            return self.getTypedRuleContext(GrammarParser.FuncTypeContext, 0)
+            return self.getTypedRuleContext(GrammarParser.FuncTypeContext,0)
+
 
         def ID(self):
             return self.getToken(GrammarParser.ID, 0)
@@ -1488,27 +1554,32 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.RIGHT_BRACKET, 0)
 
         def block(self):
-            return self.getTypedRuleContext(GrammarParser.BlockContext, 0)
+            return self.getTypedRuleContext(GrammarParser.BlockContext,0)
+
 
         def params(self):
-            return self.getTypedRuleContext(GrammarParser.ParamsContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ParamsContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_funcDec
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterFuncDec"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFuncDec" ):
                 listener.enterFuncDec(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitFuncDec"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFuncDec" ):
                 listener.exitFuncDec(self)
+
+
+
 
     def funcDec(self):
 
         localctx = GrammarParser.FuncDecContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_funcDec)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 196
@@ -1520,12 +1591,10 @@ class GrammarParser(Parser):
             self.state = 200
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & (
-                    (1 << GrammarParser.INT) | (1 << GrammarParser.FLOAT) | (1 << GrammarParser.DOUBLE) | (
-                    1 << GrammarParser.LONG) | (1 << GrammarParser.CHAR) | (1 << GrammarParser.STRING) | (
-                            1 << GrammarParser.BOOL))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << GrammarParser.INT) | (1 << GrammarParser.FLOAT) | (1 << GrammarParser.DOUBLE) | (1 << GrammarParser.LONG) | (1 << GrammarParser.CHAR) | (1 << GrammarParser.STRING) | (1 << GrammarParser.BOOL))) != 0):
                 self.state = 199
                 self.params()
+
 
             self.state = 202
             self.match(GrammarParser.RIGHT_BRACKET)
@@ -1539,10 +1608,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class FuncContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1552,16 +1622,17 @@ class GrammarParser(Parser):
         def LEFT_BRACKET(self):
             return self.getToken(GrammarParser.LEFT_BRACKET, 0)
 
-        def exp(self, i: int = None):
+        def exp(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.ExpContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.ExpContext, i)
+                return self.getTypedRuleContext(GrammarParser.ExpContext,i)
+
 
         def RIGHT_BRACKET(self):
             return self.getToken(GrammarParser.RIGHT_BRACKET, 0)
 
-        def COMMA(self, i: int = None):
+        def COMMA(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.COMMA)
             else:
@@ -1570,19 +1641,22 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_func
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterFunc"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFunc" ):
                 listener.enterFunc(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitFunc"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFunc" ):
                 listener.exitFunc(self)
+
+
+
 
     def func(self):
 
         localctx = GrammarParser.FuncContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_func)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 205
@@ -1594,7 +1668,7 @@ class GrammarParser(Parser):
             self.state = 212
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la == GrammarParser.COMMA:
+            while _la==GrammarParser.COMMA:
                 self.state = 208
                 self.match(GrammarParser.COMMA)
                 self.state = 209
@@ -1613,35 +1687,43 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class AssignmentContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def varAssignment(self):
-            return self.getTypedRuleContext(GrammarParser.VarAssignmentContext, 0)
+            return self.getTypedRuleContext(GrammarParser.VarAssignmentContext,0)
+
 
         def arrayAssignment(self):
-            return self.getTypedRuleContext(GrammarParser.ArrayAssignmentContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ArrayAssignmentContext,0)
+
 
         def singleExp(self):
-            return self.getTypedRuleContext(GrammarParser.SingleExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.SingleExpContext,0)
+
 
         def varOpVar(self):
-            return self.getTypedRuleContext(GrammarParser.VarOpVarContext, 0)
+            return self.getTypedRuleContext(GrammarParser.VarOpVarContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_assignment
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterAssignment"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAssignment" ):
                 listener.enterAssignment(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitAssignment"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAssignment" ):
                 listener.exitAssignment(self)
+
+
+
 
     def assignment(self):
 
@@ -1650,7 +1732,7 @@ class GrammarParser(Parser):
         try:
             self.state = 221
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input, 17, self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 217
@@ -1684,29 +1766,35 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class DeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def varDec(self):
-            return self.getTypedRuleContext(GrammarParser.VarDecContext, 0)
+            return self.getTypedRuleContext(GrammarParser.VarDecContext,0)
+
 
         def arrayDec(self):
-            return self.getTypedRuleContext(GrammarParser.ArrayDecContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ArrayDecContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_declaration
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterDeclaration"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDeclaration" ):
                 listener.enterDeclaration(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitDeclaration"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDeclaration" ):
                 listener.exitDeclaration(self)
+
+
+
 
     def declaration(self):
 
@@ -1715,7 +1803,7 @@ class GrammarParser(Parser):
         try:
             self.state = 225
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input, 18, self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 223
@@ -1737,15 +1825,17 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class VarDecContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifierType(self):
-            return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext, 0)
+            return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext,0)
+
 
         def ID(self):
             return self.getToken(GrammarParser.ID, 0)
@@ -1757,24 +1847,28 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.ASSIGN, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_varDec
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterVarDec"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVarDec" ):
                 listener.enterVarDec(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitVarDec"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVarDec" ):
                 listener.exitVarDec(self)
+
+
+
 
     def varDec(self):
 
         localctx = GrammarParser.VarDecContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_varDec)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 227
@@ -1784,11 +1878,12 @@ class GrammarParser(Parser):
             self.state = 231
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la == GrammarParser.ASSIGN:
+            if _la==GrammarParser.ASSIGN:
                 self.state = 229
                 self.match(GrammarParser.ASSIGN)
                 self.state = 230
                 self.exp(0)
+
 
             self.state = 233
             self.match(GrammarParser.SEMICOLON)
@@ -1800,10 +1895,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class VarAssignmentContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1814,18 +1910,22 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.ASSIGN, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_varAssignment
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterVarAssignment"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVarAssignment" ):
                 listener.enterVarAssignment(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitVarAssignment"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVarAssignment" ):
                 listener.exitVarAssignment(self)
+
+
+
 
     def varAssignment(self):
 
@@ -1847,10 +1947,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class VarOpContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1869,26 +1970,27 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_varOp
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterVarOp"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVarOp" ):
                 listener.enterVarOp(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitVarOp"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVarOp" ):
                 listener.exitVarOp(self)
+
+
+
 
     def varOp(self):
 
         localctx = GrammarParser.VarOpContext(self, self._ctx, self.state)
         self.enterRule(localctx, 42, self.RULE_varOp)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 239
             _la = self._input.LA(1)
-            if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & (
-                    (1 << GrammarParser.PEQ) | (1 << GrammarParser.MINEQ) | (1 << GrammarParser.MULEQ) | (
-                    1 << GrammarParser.DIVEQ))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << GrammarParser.PEQ) | (1 << GrammarParser.MINEQ) | (1 << GrammarParser.MULEQ) | (1 << GrammarParser.DIVEQ))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1901,21 +2003,23 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class VarOpVarContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def ID(self, i: int = None):
+        def ID(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.ID)
             else:
                 return self.getToken(GrammarParser.ID, i)
 
         def varOp(self):
-            return self.getTypedRuleContext(GrammarParser.VarOpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.VarOpContext,0)
+
 
         def SEMICOLON(self):
             return self.getToken(GrammarParser.SEMICOLON, 0)
@@ -1923,13 +2027,16 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_varOpVar
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterVarOpVar"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVarOpVar" ):
                 listener.enterVarOpVar(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitVarOpVar"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVarOpVar" ):
                 listener.exitVarOpVar(self)
+
+
+
 
     def varOpVar(self):
 
@@ -1953,15 +2060,17 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ArrayDecContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifierType(self):
-            return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext, 0)
+            return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext,0)
+
 
         def ID(self):
             return self.getToken(GrammarParser.ID, 0)
@@ -1982,24 +2091,28 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.ASSIGN, 0)
 
         def arrayInit(self):
-            return self.getTypedRuleContext(GrammarParser.ArrayInitContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ArrayInitContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_arrayDec
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterArrayDec"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrayDec" ):
                 listener.enterArrayDec(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitArrayDec"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrayDec" ):
                 listener.exitArrayDec(self)
+
+
+
 
     def arrayDec(self):
 
         localctx = GrammarParser.ArrayDecContext(self, self._ctx, self.state)
         self.enterRule(localctx, 46, self.RULE_arrayDec)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 246
@@ -2011,20 +2124,22 @@ class GrammarParser(Parser):
             self.state = 250
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la == GrammarParser.NATURAL:
+            if _la==GrammarParser.NATURAL:
                 self.state = 249
                 self.match(GrammarParser.NATURAL)
+
 
             self.state = 252
             self.match(GrammarParser.SQR_RIGHT_BRACKET)
             self.state = 255
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la == GrammarParser.ASSIGN:
+            if _la==GrammarParser.ASSIGN:
                 self.state = 253
                 self.match(GrammarParser.ASSIGN)
                 self.state = 254
                 self.arrayInit()
+
 
             self.state = 257
             self.match(GrammarParser.SEMICOLON)
@@ -2036,26 +2151,28 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ArrayInitContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def CURLY_LEFT_BRACKET(self):
             return self.getToken(GrammarParser.CURLY_LEFT_BRACKET, 0)
 
-        def exp(self, i: int = None):
+        def exp(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.ExpContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.ExpContext, i)
+                return self.getTypedRuleContext(GrammarParser.ExpContext,i)
+
 
         def CURLY_RIGHT_BRACKET(self):
             return self.getToken(GrammarParser.CURLY_RIGHT_BRACKET, 0)
 
-        def COMMA(self, i: int = None):
+        def COMMA(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.COMMA)
             else:
@@ -2064,19 +2181,22 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_arrayInit
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterArrayInit"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrayInit" ):
                 listener.enterArrayInit(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitArrayInit"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrayInit" ):
                 listener.exitArrayInit(self)
+
+
+
 
     def arrayInit(self):
 
         localctx = GrammarParser.ArrayInitContext(self, self._ctx, self.state)
         self.enterRule(localctx, 48, self.RULE_arrayInit)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 259
@@ -2086,7 +2206,7 @@ class GrammarParser(Parser):
             self.state = 265
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la == GrammarParser.COMMA:
+            while _la==GrammarParser.COMMA:
                 self.state = 261
                 self.match(GrammarParser.COMMA)
                 self.state = 262
@@ -2105,10 +2225,11 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ArrayAssignmentContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2128,18 +2249,22 @@ class GrammarParser(Parser):
             return self.getToken(GrammarParser.ASSIGN, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(GrammarParser.ExpContext, 0)
+            return self.getTypedRuleContext(GrammarParser.ExpContext,0)
+
 
         def getRuleIndex(self):
             return GrammarParser.RULE_arrayAssignment
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterArrayAssignment"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrayAssignment" ):
                 listener.enterArrayAssignment(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitArrayAssignment"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrayAssignment" ):
                 listener.exitArrayAssignment(self)
+
+
+
 
     def arrayAssignment(self):
 
@@ -2167,26 +2292,28 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
+
     class ParamsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def identifierType(self, i: int = None):
+        def identifierType(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(GrammarParser.IdentifierTypeContext)
             else:
-                return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext, i)
+                return self.getTypedRuleContext(GrammarParser.IdentifierTypeContext,i)
 
-        def ID(self, i: int = None):
+
+        def ID(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.ID)
             else:
                 return self.getToken(GrammarParser.ID, i)
 
-        def COMMA(self, i: int = None):
+        def COMMA(self, i:int=None):
             if i is None:
                 return self.getTokens(GrammarParser.COMMA)
             else:
@@ -2195,19 +2322,22 @@ class GrammarParser(Parser):
         def getRuleIndex(self):
             return GrammarParser.RULE_params
 
-        def enterRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "enterParams"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterParams" ):
                 listener.enterParams(self)
 
-        def exitRule(self, listener: ParseTreeListener):
-            if hasattr(listener, "exitParams"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitParams" ):
                 listener.exitParams(self)
+
+
+
 
     def params(self):
 
         localctx = GrammarParser.ParamsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 52, self.RULE_params)
-        self._la = 0  # Token type
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 277
@@ -2217,7 +2347,7 @@ class GrammarParser(Parser):
             self.state = 285
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la == GrammarParser.COMMA:
+            while _la==GrammarParser.COMMA:
                 self.state = 279
                 self.match(GrammarParser.COMMA)
                 self.state = 280
@@ -2236,7 +2366,9 @@ class GrammarParser(Parser):
             self.exitRule()
         return localctx
 
-    def sempred(self, localctx: RuleContext, ruleIndex: int, predIndex: int):
+
+
+    def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates == None:
             self._predicates = dict()
         self._predicates[4] = self.exp_sempred
@@ -2246,6 +2378,11 @@ class GrammarParser(Parser):
         else:
             return pred(localctx, predIndex)
 
-    def exp_sempred(self, localctx: ExpContext, predIndex: int):
-        if predIndex == 0:
-            return self.precpred(self._ctx, 6)
+    def exp_sempred(self, localctx:ExpContext, predIndex:int):
+            if predIndex == 0:
+                return self.precpred(self._ctx, 6)
+         
+
+
+
+
