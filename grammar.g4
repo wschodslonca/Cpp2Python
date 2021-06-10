@@ -1,4 +1,4 @@
-grammar grammar;
+grammar Grammar;
 program
 : INCLUDE STD funcDec* varDec* mainFunc;
 
@@ -91,7 +91,7 @@ func
 assignment
 : varAssignment
 | arrayAssignment
-| singleExp;
+| singleExp
 | varOpVar;
 
 declaration
@@ -111,7 +111,7 @@ varOp
 | DIVEQ;
 
 varOpVar
-: ID varOP ID SEMICOLON;
+: ID varOp ID SEMICOLON;
 
 arrayDec
 : identifierType ID SQR_LEFT_BRACKET NATURAL? SQR_RIGHT_BRACKET (ASSIGN arrayInit)? SEMICOLON;
@@ -167,8 +167,8 @@ NONDIGIT: [a-zA-Z_];
 CHARACTER : DIGIT|NONDIGIT;
 ID : NONDIGIT CHARACTER*;
 TEXT : CHARACTER*;
-NATURAL : 0 | ([1-9][0-9]*);
-NUMBER : MINUS? (NATURAL | (NATURAL DOT NATURAL))
+NATURAL : '0' | ([1-9][0-9]*);
+NUMBER : MINUS? (NATURAL | (NATURAL DOT NATURAL));
 INT : 'int';
 FLOAT : 'float';
 DOUBLE : 'double';
@@ -189,6 +189,6 @@ MAIN : 'main';
 TRUE : 'true';
 FALSE : 'false';
 BOOLS : TRUE | FALSE; 
-IOSTREAM : #include<iostream>
-STD : using namespace std;
-INCLUDE : IOSTREAM
+IOSTREAM : '#include<iostream>';
+STD : 'using namespace std';
+INCLUDE : IOSTREAM;
