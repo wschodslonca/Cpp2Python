@@ -1,6 +1,5 @@
 #include<iostream>
 using namespace std;
-
 int NWD(int a, int b){
 	
 	while(a!=b){

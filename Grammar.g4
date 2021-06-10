@@ -1,5 +1,6 @@
 grammar Grammar;
 
+SPACE : ' ';
 DOT : '.';
 COMMA : ',';
 SEMICOLON : ';';
@@ -37,12 +38,6 @@ MINEQ : '-=';
 MULEQ : '*=';
 DIVEQ : '/=';
 NEW_LINE : '\n';
-DIGIT : [0-9];
-NONDIGIT: [a-zA-Z_];
-CHARACTER : DIGIT|NONDIGIT;
-ID : NONDIGIT CHARACTER*;
-TEXT : CHARACTER*;
-NATURAL : '0' | ([1-9][0-9]*);
 NUMBER : MINUS? (NATURAL | (NATURAL DOT NATURAL));
 INT : 'int';
 FLOAT : 'float';
@@ -64,12 +59,17 @@ MAIN : 'main';
 TRUE : 'true';
 FALSE : 'false';
 BOOLS : TRUE | FALSE;
-IOSTREAM : '#include<iostream>';
-STD : 'using namespace std';
-INCLUDE : IOSTREAM;
+DIGIT : [0-9];
+NATURAL : '0' | ([1-9][0-9]*);
+NONDIGIT: [a-zA-Z_];
+CHARACTER : DIGIT|NONDIGIT;
+TEXT : CHARACTER*;
+ID : NONDIGIT CHARACTER*;
+INCLUDE : '#include<iostream>';
+STD : 'using namespace std;';
 
 program
-: INCLUDE STD funcDec* varDec* mainFunc;
+: INCLUDE NEW_LINE STD NEW_LINE mainFunc EOF;
 
 mainFunc
 : INT MAIN LEFT_BRACKET VOID? RIGHT_BRACKET block;
