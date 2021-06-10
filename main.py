@@ -1,6 +1,12 @@
+from antlr4 import *
+from GrammarLexer import GrammarLexer
+from GrammarParser import GrammarParser
+from GrammarListener import GrammarListener
+
 class Translator:
     # Class that converts .cpp to .py
     def __init__(self):
+
         self.input_file = None
         self.result_file = "output.py"
         self.lines = []
@@ -20,8 +26,13 @@ class Translator:
             print(line)
 
 
-if __name__ == '__main__':
+def main():
     translator = Translator()
     translator.import_code_file()
     translator.cpp2py()
     translator.write_to_output()
+
+
+if __name__ == '__main__':
+    main()
+
