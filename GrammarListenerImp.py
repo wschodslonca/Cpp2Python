@@ -2,30 +2,164 @@ from antlr4 import *
 import sys
 from GrammarListener import GrammarListener
 from GrammarLexer import GrammarLexer
-from GrammarParser import GrammarParser
+from GrammarParser import *
 
 class GrammarListenerImp(GrammarListener):
 
     def __init__(self):
         self.c = ""
+        self.indParam = 0
+
+    def parseExp(self, ctx):
+        text = ""
+        if len(ctx.exp())==2:
+            text += self.parseExp(ctx.exp()[0])
+            text += self.parseExpOp(ctx.expOp())
+            text += self.parseExp(ctx.exp()[1])
+        elif len(ctx.exp())==1:
+            text += ctx.LEFT_BRACKET().getText()
+            text += self.parseExp(ctx.exp()[0])
+            text += ctx.RIGHT_BRACKET().getText()
+        else:
+            # temp
+            text += ctx.getText()
+        return text
+
+    def parseExpOp(self, ctx):
+        #if isinstance(ctx,GrammarParser.AND):
+        if ctx.getText()=="&&":
+            return " and "
+        #elif isinstance(ctx,GrammarParser.OR):
+        elif ctx.getText() == "||":
+            return " or "
+        else:
+            return ctx.getText()
+
+    def parseFuncDec(self,ctx):
+        self.ind()
+        self.add("def " + ctx.ID().getText() + "(")
+        params = ctx.params()
+        if len(params.ID()) > 0:
+            self.add(params.ID()[0].getText())
+            for i in params.ID()[1:]:
+                self.add(", " + i.getText())
+        self.add(")")
+        self.parseBlock(ctx.block())
+
+
+    #todo
+    def parseVarDec(self,ctx):
+        pass
+
+    #todo
+    def parseStatement(self,ctx):
+        if ctx.whileSt():
+            self.parseWhileSt(ctx.whileSt())
+        elif ctx.ifSt():
+            self.parseIfSt(ctx.ifSt())
+        else:
+            pass
+
+    #todo
+    def parseDeclaration(self,ctx):
+        pass
+
+    #todo
+    def parseAssignment(self,ctx):
+        pass
+
+    #todo
+    def parseBlockElement(self,ctx):
+        if ctx.statement():
+            self.parseStatement(ctx.statement())
+        elif ctx.declaration():
+            self.parseDeclaration(ctx.declaration())
+        elif ctx.assignment():
+            self.parseAssignment(ctx.assignment())
+        else:
+            self.parseExp(ctx.exp())
+            self.add(ctx.SEMICOLON.getText())
+
+
+    def parseBlock(self,ctx):
+        self.add(":\n")
+        self.incInd()
+        if len(ctx.blockElement())>0:
+            for i in ctx.blockElement():
+                self.parseBlockElement(i)
+        self.decInd()
+
+    def parseBracketExp(self, ctx):
+        self.add(ctx.LEFT_BRACKET().getText())
+        self.add(self.parseExp(ctx.exp()))
+        self.add(ctx.RIGHT_BRACKET().getText())
+
+    def parseWhileSt(self,ctx):
+        self.ind()
+        self.add(ctx.WHILE().getText())
+        self.parseBracketExp(ctx.bracketsExp())
+        self.parseBlock(ctx.block())
+
+    def parseIfSt(self,ctx):
+        self.ind()
+        self.add(ctx.IF().getText())
+        self.parseBracketExp(ctx.bracketsExp()[0])
+        self.parseBlock(ctx.block()[0])
+        i = 1
+        if len(ctx.ELSE_IF())>0:
+            for i in range(1,len(ctx.ELSE_IF())+1):
+                self.ind()
+                self.add(ctx.ELSE_IF()[i-1].getText())
+                self.parseBracketExp(ctx.bracketsExp()[i])
+                self.parseBlock(ctx.block()[i])
+        if ctx.ELSE():
+            self.ind()
+            self.add(ctx.ELSE().getText())
+            self.parseBlock(ctx.block(i))
+
+    def parseMainFunc(self,ctx):
+        self.add("def main()")
+        self.parseBlock(ctx.block())
+
+    def add(self,text):
+        self.c += text
+
+    def ind(self):
+        inds = ""
+        for i in range(self.indParam):
+            inds+="  "
+        self.add(inds)
+
+    def incInd(self):
+        self.indParam += 1
+
+    def decInd(self):
+        self.indParam -= 1
 
     def enterProgram(self, ctx: GrammarParser.ProgramContext):
-        super().enterProgram(ctx)
+        if len(ctx.funcDec())>0:
+            for i in ctx.funcDec():
+                self.parseFuncDec(i)
+        if len(ctx.varDec())>0:
+            for i in ctx.varDec():
+                self.parseVarDec(i)
+        self.parseMainFunc(ctx.mainFunc())
+
 
     def exitProgram(self, ctx: GrammarParser.ProgramContext):
-        self.c +="if __name__ == '__main__':\n  main()"
+        self.add("if __name__ == '__main__':\n  main()")
 
     def enterMainFunc(self, ctx: GrammarParser.MainFuncContext):
-        super().enterMainFunc(ctx)
+        pass
 
     def exitMainFunc(self, ctx: GrammarParser.MainFuncContext):
-        super().exitMainFunc(ctx)
+        pass
 
     def enterBlock(self, ctx: GrammarParser.BlockContext):
-        super().enterBlock(ctx)
+        pass
 
     def exitBlock(self, ctx: GrammarParser.BlockContext):
-        super().exitBlock(ctx)
+        pass
 
     def enterBlockElement(self, ctx: GrammarParser.BlockElementContext):
         super().enterBlockElement(ctx)
@@ -34,16 +168,16 @@ class GrammarListenerImp(GrammarListener):
         super().exitBlockElement(ctx)
 
     def enterExp(self, ctx: GrammarParser.ExpContext):
-        super().enterExp(ctx)
+        pass
 
     def exitExp(self, ctx: GrammarParser.ExpContext):
-        super().exitExp(ctx)
+        pass
 
     def enterExpOp(self, ctx: GrammarParser.ExpOpContext):
-        super().enterExpOp(ctx)
+        pass
 
     def exitExpOp(self, ctx: GrammarParser.ExpOpContext):
-        super().exitExpOp(ctx)
+        pass
 
     def enterSingleExp(self, ctx: GrammarParser.SingleExpContext):
         super().enterSingleExp(ctx)
@@ -52,10 +186,10 @@ class GrammarListenerImp(GrammarListener):
         super().exitSingleExp(ctx)
 
     def enterBracketsExp(self, ctx: GrammarParser.BracketsExpContext):
-        super().enterBracketsExp(ctx)
+        pass
 
     def exitBracketsExp(self, ctx: GrammarParser.BracketsExpContext):
-        super().exitBracketsExp(ctx)
+        pass
 
     def enterStatement(self, ctx: GrammarParser.StatementContext):
         super().enterStatement(ctx)
@@ -64,13 +198,14 @@ class GrammarListenerImp(GrammarListener):
         super().exitStatement(ctx)
 
     def enterIfSt(self, ctx: GrammarParser.IfStContext):
-        super().enterIfSt(ctx)
+        pass
 
     def exitIfSt(self, ctx: GrammarParser.IfStContext):
         super().exitIfSt(ctx)
 
     def enterWhileSt(self, ctx: GrammarParser.WhileStContext):
-        super().enterWhileSt(ctx)
+        pass
+
 
     def exitWhileSt(self, ctx: GrammarParser.WhileStContext):
         super().exitWhileSt(ctx)
@@ -100,10 +235,11 @@ class GrammarListenerImp(GrammarListener):
         super().exitFuncType(ctx)
 
     def enterFuncDec(self, ctx: GrammarParser.FuncDecContext):
-        super().enterFuncDec(ctx)
+        pass
+
 
     def exitFuncDec(self, ctx: GrammarParser.FuncDecContext):
-        super().exitFuncDec(ctx)
+        pass
 
     def enterFunc(self, ctx: GrammarParser.FuncContext):
         super().enterFunc(ctx)
@@ -166,10 +302,10 @@ class GrammarListenerImp(GrammarListener):
         super().exitArrayAssignment(ctx)
 
     def enterParams(self, ctx: GrammarParser.ParamsContext):
-        super().enterParams(ctx)
+        pass
 
     def exitParams(self, ctx: GrammarParser.ParamsContext):
-        super().exitParams(ctx)
+        pass
 
 
 

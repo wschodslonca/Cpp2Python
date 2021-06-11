@@ -59,10 +59,10 @@ FALSE : 'false';
 BOOLS : TRUE | FALSE;
 DIGIT : [0-9];
 NATURAL : '0' | ([1-9][0-9]*);
+ID : NONDIGIT CHARACTER*;
 NONDIGIT: [a-zA-Z_];
 CHARACTER : DIGIT|NONDIGIT;
 TEXT : CHARACTER+;
-ID : NONDIGIT CHARACTER*;
 INCLUDE : '#include<iostream>';
 STD : 'using namespace std;';
 WS : [ \t\r\n]+ -> skip ;
@@ -83,10 +83,10 @@ blockElement
 | assignment;
 
 exp
-: NUMBER
+: exp expOp exp
+| NUMBER
 | ID
 | func
-| exp expOp exp
 | LEFT_BRACKET exp RIGHT_BRACKET
 | singleExp
 | APOSTROPHE CHARACTER APOSTROPHE
