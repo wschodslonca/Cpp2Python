@@ -3,6 +3,7 @@ from GrammarLexer import GrammarLexer
 from GrammarParser import GrammarParser
 from GrammarListener import GrammarListener
 from GrammarListenerImp import GrammarListenerImp
+import os
 
 class Translator:
     # Class that converts .cpp to .py
@@ -39,6 +40,7 @@ def main():
     translator.import_code_file()
     translator.cpp2py()
     translator.write_to_output()
+    #os.system('output.py')
 
 if __name__ == '__main__':
     main()

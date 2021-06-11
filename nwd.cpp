@@ -12,7 +12,7 @@ int nwd(int a, int b){
 	return a;
 }
 int main(){
-	
+
 	int number1 = 72;
 	int number2 = 84;
 }

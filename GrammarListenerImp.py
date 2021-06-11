@@ -10,20 +10,25 @@ class GrammarListenerImp(GrammarListener):
         self.c = ""
         self.indParam = 0
 
-    def parseExp(self, ctx):
+
+    def parseExpIns(self,ctx):
         text = ""
-        if len(ctx.exp())==2:
-            text += self.parseExp(ctx.exp()[0])
+        if len(ctx.exp()) == 2:
+            text += self.parseExpIns(ctx.exp()[0])
             text += self.parseExpOp(ctx.expOp())
-            text += self.parseExp(ctx.exp()[1])
-        elif len(ctx.exp())==1:
+            text += self.parseExpIns(ctx.exp()[1])
+        elif len(ctx.exp()) == 1:
             text += ctx.LEFT_BRACKET().getText()
-            text += self.parseExp(ctx.exp()[0])
+            text += self.parseExpIns(ctx.exp()[0])
             text += ctx.RIGHT_BRACKET().getText()
         else:
+            print(ctx.getText())
             # temp
             text += ctx.getText()
         return text
+
+    def parseExp(self, ctx):
+        self.add(self.parseExpIns(ctx))
 
     def parseExpOp(self, ctx):
         #if isinstance(ctx,GrammarParser.AND):
@@ -53,20 +58,44 @@ class GrammarListenerImp(GrammarListener):
 
     #todo
     def parseStatement(self,ctx):
+        self.ind()
         if ctx.whileSt():
             self.parseWhileSt(ctx.whileSt())
         elif ctx.ifSt():
             self.parseIfSt(ctx.ifSt())
+        elif ctx.returnSt():
+            self.parseReturnSt(ctx.returnSt())
         else:
             pass
+
+    def parseReturnSt(self,ctx):
+        self.add(ctx.RETURN().getText()+" ")
+        self.parseExp(ctx.exp())
+        self.add("\n")
+
 
     #todo
     def parseDeclaration(self,ctx):
         pass
 
+    def parseVarOp(self,ctx):
+        self.add(ctx.getText())
+
+    #todo
+    def parseVarOpVar(self,ctx):
+        self.add(ctx.ID()[0].getText())
+        self.add(ctx.varOp().getText())
+        self.add(ctx.ID()[1].getText())
+
     #todo
     def parseAssignment(self,ctx):
-        pass
+        self.ind()
+        if ctx.varOpVar():
+            self.parseVarOpVar(ctx.varOpVar())
+        #todo
+        else:
+            pass
+        self.add("\n")
 
     #todo
     def parseBlockElement(self,ctx):
@@ -78,7 +107,6 @@ class GrammarListenerImp(GrammarListener):
             self.parseAssignment(ctx.assignment())
         else:
             self.parseExp(ctx.exp())
-            self.add(ctx.SEMICOLON.getText())
 
 
     def parseBlock(self,ctx):
@@ -90,19 +118,15 @@ class GrammarListenerImp(GrammarListener):
         self.decInd()
 
     def parseBracketExp(self, ctx):
-        self.add(ctx.LEFT_BRACKET().getText())
-        self.add(self.parseExp(ctx.exp()))
-        self.add(ctx.RIGHT_BRACKET().getText())
+        self.parseExp(ctx.exp())
 
     def parseWhileSt(self,ctx):
-        self.ind()
-        self.add(ctx.WHILE().getText())
+        self.add(ctx.WHILE().getText()+" ")
         self.parseBracketExp(ctx.bracketsExp())
         self.parseBlock(ctx.block())
 
     def parseIfSt(self,ctx):
-        self.ind()
-        self.add(ctx.IF().getText())
+        self.add(ctx.IF().getText()+" ")
         self.parseBracketExp(ctx.bracketsExp()[0])
         self.parseBlock(ctx.block()[0])
         i = 1
