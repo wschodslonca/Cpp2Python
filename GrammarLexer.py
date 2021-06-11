@@ -2,11 +2,11 @@
 from antlr4 import *
 from io import StringIO
 import sys
+
 if sys.version_info[1] > 5:
     from typing import TextIO
 else:
     from typing.io import TextIO
-
 
 
 def serializedATN():
@@ -202,10 +202,9 @@ def serializedATN():
 
 
 class GrammarLexer(Lexer):
-
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     DOT = 1
     COMMA = 2
@@ -279,54 +278,52 @@ class GrammarLexer(Lexer):
     STD = 70
     WS = 71
 
-    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+    channelNames = [u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN"]
 
-    modeNames = [ "DEFAULT_MODE" ]
+    modeNames = ["DEFAULT_MODE"]
 
-    literalNames = [ "<INVALID>",
-            "'.'", "','", "';'", "'''", "'\"'", "':'", "'::'", "'#'", "'//'", 
-            "'('", "')'", "'['", "']'", "'{'", "'}'", "'<'", "'>'", "'<='", 
-            "'>='", "'+'", "'-'", "'*'", "'/'", "'%'", "'='", "'&&'", "'||'", 
-            "'!'", "'!='", "'=='", "'++'", "'--'", "'+='", "'-='", "'*='", 
-            "'/='", "'<<'", "'>>'", "'int'", "'float'", "'double'", "'long'", 
-            "'char'", "'string'", "'bool'", "'void'", "'if'", "'else'", 
-            "'else if'", "'while'", "'for'", "'break'", "'continue'", "'return'", 
-            "'main'", "'true'", "'false'", "'endl'", "'#include<iostream>'", 
-            "'using namespace std;'" ]
+    literalNames = ["<INVALID>",
+                    "'.'", "','", "';'", "'''", "'\"'", "':'", "'::'", "'#'", "'//'",
+                    "'('", "')'", "'['", "']'", "'{'", "'}'", "'<'", "'>'", "'<='",
+                    "'>='", "'+'", "'-'", "'*'", "'/'", "'%'", "'='", "'&&'", "'||'",
+                    "'!'", "'!='", "'=='", "'++'", "'--'", "'+='", "'-='", "'*='",
+                    "'/='", "'<<'", "'>>'", "'int'", "'float'", "'double'", "'long'",
+                    "'char'", "'string'", "'bool'", "'void'", "'if'", "'else'",
+                    "'else if'", "'while'", "'for'", "'break'", "'continue'", "'return'",
+                    "'main'", "'true'", "'false'", "'endl'", "'#include<iostream>'",
+                    "'using namespace std;'"]
 
-    symbolicNames = [ "<INVALID>",
-            "DOT", "COMMA", "SEMICOLON", "APOSTROPHE", "QUOTE", "COLON", 
-            "DOUBLE_COLON", "HASH", "COMMENTS", "LEFT_BRACKET", "RIGHT_BRACKET", 
-            "SQR_LEFT_BRACKET", "SQR_RIGHT_BRACKET", "CURLY_LEFT_BRACKET", 
-            "CURLY_RIGHT_BRACKET", "LE", "GE", "LEQ", "GEQ", "PLUS", "MINUS", 
-            "MUL", "DIV", "MOD", "ASSIGN", "AND", "OR", "NOT", "NOT_EQ", 
-            "EQ", "PP", "MM", "PEQ", "MINEQ", "MULEQ", "DIVEQ", "DARRL", 
-            "DARRR", "NUMBER", "INT", "FLOAT", "DOUBLE", "LONG", "CHAR", 
-            "STRING", "BOOL", "VOID", "IF", "ELSE", "ELSE_IF", "WHILE", 
-            "FOR", "BREAK", "CONTINUE", "RETURN", "MAIN", "TRUE", "FALSE", 
-            "COUT", "CIN", "BOOLS", "ENDL", "DIGIT", "NATURAL", "ID", "NONDIGIT", 
-            "CHARACTER", "TEXT", "INCLUDE", "STD", "WS" ]
+    symbolicNames = ["<INVALID>",
+                     "DOT", "COMMA", "SEMICOLON", "APOSTROPHE", "QUOTE", "COLON",
+                     "DOUBLE_COLON", "HASH", "COMMENTS", "LEFT_BRACKET", "RIGHT_BRACKET",
+                     "SQR_LEFT_BRACKET", "SQR_RIGHT_BRACKET", "CURLY_LEFT_BRACKET",
+                     "CURLY_RIGHT_BRACKET", "LE", "GE", "LEQ", "GEQ", "PLUS", "MINUS",
+                     "MUL", "DIV", "MOD", "ASSIGN", "AND", "OR", "NOT", "NOT_EQ",
+                     "EQ", "PP", "MM", "PEQ", "MINEQ", "MULEQ", "DIVEQ", "DARRL",
+                     "DARRR", "NUMBER", "INT", "FLOAT", "DOUBLE", "LONG", "CHAR",
+                     "STRING", "BOOL", "VOID", "IF", "ELSE", "ELSE_IF", "WHILE",
+                     "FOR", "BREAK", "CONTINUE", "RETURN", "MAIN", "TRUE", "FALSE",
+                     "COUT", "CIN", "BOOLS", "ENDL", "DIGIT", "NATURAL", "ID", "NONDIGIT",
+                     "CHARACTER", "TEXT", "INCLUDE", "STD", "WS"]
 
-    ruleNames = [ "DOT", "COMMA", "SEMICOLON", "APOSTROPHE", "QUOTE", "COLON", 
-                  "DOUBLE_COLON", "HASH", "COMMENTS", "LEFT_BRACKET", "RIGHT_BRACKET", 
-                  "SQR_LEFT_BRACKET", "SQR_RIGHT_BRACKET", "CURLY_LEFT_BRACKET", 
-                  "CURLY_RIGHT_BRACKET", "LE", "GE", "LEQ", "GEQ", "PLUS", 
-                  "MINUS", "MUL", "DIV", "MOD", "ASSIGN", "AND", "OR", "NOT", 
-                  "NOT_EQ", "EQ", "PP", "MM", "PEQ", "MINEQ", "MULEQ", "DIVEQ", 
-                  "DARRL", "DARRR", "NUMBER", "INT", "FLOAT", "DOUBLE", 
-                  "LONG", "CHAR", "STRING", "BOOL", "VOID", "IF", "ELSE", 
-                  "ELSE_IF", "WHILE", "FOR", "BREAK", "CONTINUE", "RETURN", 
-                  "MAIN", "TRUE", "FALSE", "COUT", "CIN", "BOOLS", "ENDL", 
-                  "DIGIT", "NATURAL", "ID", "NONDIGIT", "CHARACTER", "TEXT", 
-                  "INCLUDE", "STD", "WS" ]
+    ruleNames = ["DOT", "COMMA", "SEMICOLON", "APOSTROPHE", "QUOTE", "COLON",
+                 "DOUBLE_COLON", "HASH", "COMMENTS", "LEFT_BRACKET", "RIGHT_BRACKET",
+                 "SQR_LEFT_BRACKET", "SQR_RIGHT_BRACKET", "CURLY_LEFT_BRACKET",
+                 "CURLY_RIGHT_BRACKET", "LE", "GE", "LEQ", "GEQ", "PLUS",
+                 "MINUS", "MUL", "DIV", "MOD", "ASSIGN", "AND", "OR", "NOT",
+                 "NOT_EQ", "EQ", "PP", "MM", "PEQ", "MINEQ", "MULEQ", "DIVEQ",
+                 "DARRL", "DARRR", "NUMBER", "INT", "FLOAT", "DOUBLE",
+                 "LONG", "CHAR", "STRING", "BOOL", "VOID", "IF", "ELSE",
+                 "ELSE_IF", "WHILE", "FOR", "BREAK", "CONTINUE", "RETURN",
+                 "MAIN", "TRUE", "FALSE", "COUT", "CIN", "BOOLS", "ENDL",
+                 "DIGIT", "NATURAL", "ID", "NONDIGIT", "CHARACTER", "TEXT",
+                 "INCLUDE", "STD", "WS"]
 
     grammarFileName = "Grammar.g4"
 
-    def __init__(self, input=None, output:TextIO = sys.stdout):
+    def __init__(self, input=None, output: TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.9.2")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None
-
-

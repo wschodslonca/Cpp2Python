@@ -1,21 +1,21 @@
 from antlr4 import *
 from GrammarLexer import GrammarLexer
 from GrammarParser import GrammarParser
-from GrammarListener import GrammarListener
 from GrammarListenerImp import GrammarListenerImp
 import os
+import sys
+
 
 class Translator:
     # Class that converts .cpp to .py
     def __init__(self):
-
         self.input_file = None
         self.result_file = "output.py"
         self.input_code = ""
         self.translated_code = ""
 
     def import_code_file(self):
-        self.input_file = open("nwd.cpp", "rt")
+        self.input_file = open(sys.argv[1], "rt")
         self.input_code = self.input_file.read()
 
     def write_to_output(self):
@@ -30,9 +30,8 @@ class Translator:
         tree = parser.program()
         walker = ParseTreeWalker()
         listener = GrammarListenerImp()
-        walker.walk(listener,tree)
+        walker.walk(listener, tree)
         self.translated_code = listener.c
-
 
 
 def main():
@@ -42,6 +41,6 @@ def main():
     translator.write_to_output()
     os.system('output.py')
 
+
 if __name__ == '__main__':
     main()
-

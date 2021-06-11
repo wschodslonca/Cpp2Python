@@ -13,7 +13,9 @@ int nwd(int a, int b){
 }
 int main(){
 
-	int number1 = 72;
-	int number2 = 84;
+	int number1;
+	int number2;
+	cin>>number1;
+	cin>>number2;
 	cout<<nwd(number1,number2)<<endl;
 }
