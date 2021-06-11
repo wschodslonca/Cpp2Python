@@ -22,7 +22,6 @@ class GrammarListenerImp(GrammarListener):
             text += self.parseExpIns(ctx.exp()[0])
             text += ctx.RIGHT_BRACKET().getText()
         else:
-            print(ctx.getText())
             # temp
             text += ctx.getText()
         return text
@@ -54,7 +53,12 @@ class GrammarListenerImp(GrammarListener):
 
     #todo
     def parseVarDec(self,ctx):
-        pass
+        self.add(ctx.ID().getText())
+        if ctx.ASSIGN():
+            self.add(" = ")
+            self.parseExp(ctx.exp())
+        else:
+            self.add(" = None")
 
     #todo
     def parseStatement(self,ctx):
@@ -73,10 +77,15 @@ class GrammarListenerImp(GrammarListener):
         self.parseExp(ctx.exp())
         self.add("\n")
 
-
     #todo
     def parseDeclaration(self,ctx):
-        pass
+        self.ind()
+        if ctx.varDec():
+            self.parseVarDec(ctx.varDec())
+        #todo
+        else:
+            pass
+        self.add("\n")
 
     def parseVarOp(self,ctx):
         self.add(ctx.getText())
