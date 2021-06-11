@@ -85,7 +85,18 @@ blockElement
 : exp SEMICOLON 
 | statement
 | declaration
-| assignment;
+| assignment
+| coutExp
+| cinExp;
+
+expOrEndl
+: (DARRL exp | DARRL ENDL);
+
+coutExp
+: COUT exp expOrEndl* SEMICOLON;
+
+cinExp
+: CIN ID SEMICOLON;
 
 exp
 : exp expOp exp

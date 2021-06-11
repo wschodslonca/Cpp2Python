@@ -15,4 +15,5 @@ int main(){
 
 	int number1 = 72;
 	int number2 = 84;
+	cout<<nwd(number1,number2)<<endl;
 }

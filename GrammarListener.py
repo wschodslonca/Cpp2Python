@@ -44,6 +44,33 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#expOrEndl.
+    def enterExpOrEndl(self, ctx:GrammarParser.ExpOrEndlContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#expOrEndl.
+    def exitExpOrEndl(self, ctx:GrammarParser.ExpOrEndlContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#coutExp.
+    def enterCoutExp(self, ctx:GrammarParser.CoutExpContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#coutExp.
+    def exitCoutExp(self, ctx:GrammarParser.CoutExpContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#cinExp.
+    def enterCinExp(self, ctx:GrammarParser.CinExpContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#cinExp.
+    def exitCinExp(self, ctx:GrammarParser.CinExpContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#exp.
     def enterExp(self, ctx:GrammarParser.ExpContext):
         pass
