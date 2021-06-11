@@ -89,6 +89,15 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#incOp.
+    def enterIncOp(self, ctx:GrammarParser.IncOpContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#incOp.
+    def exitIncOp(self, ctx:GrammarParser.IncOpContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#singleExp.
     def enterSingleExp(self, ctx:GrammarParser.SingleExpContext):
         pass

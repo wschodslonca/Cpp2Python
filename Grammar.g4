@@ -8,7 +8,6 @@ QUOTE : '"';
 COLON : ':';
 DOUBLE_COLON : '::';
 HASH : '#';
-COMMENTS : '//';
 LEFT_BRACKET : '(';
 RIGHT_BRACKET : ')';
 SQR_LEFT_BRACKET : '[';
@@ -58,8 +57,8 @@ RETURN : 'return';
 MAIN : 'main';
 TRUE : 'true';
 FALSE : 'false';
-COUT: 'cout' DARRL;
-CIN: 'cin' DARRR;
+COUT: 'cout';
+CIN: 'cin';
 BOOLS : TRUE | FALSE;
 ENDL: 'endl';
 DIGIT : [0-9];
@@ -71,6 +70,7 @@ TEXT : CHARACTER+;
 INCLUDE : '#include<iostream>';
 STD : 'using namespace std;';
 WS : [ \t\r\n]+ -> skip ;
+COMM : '//' ~ [\r\n]*;
 
 program
 : INCLUDE STD funcDec* varDec* mainFunc EOF;
@@ -87,16 +87,17 @@ blockElement
 | declaration
 | assignment
 | coutExp
-| cinExp;
+| cinExp
+| COMM;
 
 expOrEndl
 : (DARRL exp | DARRL ENDL);
 
 coutExp
-: COUT exp expOrEndl* SEMICOLON;
+: COUT expOrEndl+ SEMICOLON;
 
 cinExp
-: CIN ID SEMICOLON;
+: CIN DARRR ID SEMICOLON;
 
 exp
 : exp expOp exp
@@ -124,10 +125,14 @@ expOp
 | NOT_EQ
 | EQ;
 
+incOp
+: PP
+| MM;
+
 singleExp
 : NOT ID
-| (PP|MM) ID
-| ID (PP|MM);
+| incOp ID
+| ID incOp;
 
 bracketsExp
 : LEFT_BRACKET exp RIGHT_BRACKET;
@@ -186,7 +191,7 @@ varDec
 : identifierType ID (ASSIGN exp)? SEMICOLON;
 
 varAssignment
-: ID ASSIGN exp;
+: ID ASSIGN exp SEMICOLON;
 
 varOp
 : PEQ
