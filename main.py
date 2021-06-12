@@ -17,8 +17,8 @@ class Translator:
         self.translated_code = ""
 
     def load_file(self):
-        if len(sys.argv)>1:
-            if sys.argv[1][-4:]=='.cpp':
+        if len(sys.argv) > 1:
+            if sys.argv[1][-4:] == '.cpp':
                 self.input_file = sys.argv[1]
                 self.result_file = sys.argv[1][0:-4] + '.py'
                 return True
@@ -29,13 +29,12 @@ class Translator:
             print('missing input file...')
             return False
 
-
     def import_code(self):
-        input_file = open(self.workspace_path+self.input_file, "rt")
+        input_file = open(self.workspace_path + self.input_file, "rt")
         self.input_code = input_file.read()
 
     def write_to_output(self):
-        output = open(self.workspace_path+self.result_file, "w")
+        output = open(self.workspace_path + self.result_file, "w")
         output.write('# from ' + self.input_file + ' to ' + self.result_file + '\n')
         output.write(self.translated_code)
         output.close()
@@ -54,16 +53,17 @@ class Translator:
         self.translated_code = listener.c
 
     def run_output(self):
-        os.system(self.workspace_path+self.result_file)
+        os.system(self.workspace_path + self.result_file)
 
 
 def main():
-        translator = Translator()
-        if translator.load_file():
-            translator.import_code()
-            translator.cpp2py()
-            translator.write_to_output()
-            translator.run_output()
+    translator = Translator()
+    if translator.load_file():
+        translator.import_code()
+        translator.cpp2py()
+        translator.write_to_output()
+        translator.run_output()
+
 
 if __name__ == '__main__':
     main()
