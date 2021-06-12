@@ -2,6 +2,7 @@ from antlr4 import *
 from GrammarLexer import GrammarLexer
 from GrammarParser import GrammarParser
 from GrammarListenerImp import GrammarListenerImp
+from GrammarErrorListener import GrammarErrorListener
 import os
 import sys
 
@@ -41,8 +42,11 @@ class Translator:
 
     def cpp2py(self):
         lexer = GrammarLexer(InputStream(self.input_code))
+        grammarErrorListener = GrammarErrorListener()
+        lexer.addErrorListener(grammarErrorListener)
         stream = CommonTokenStream(lexer)
         parser = GrammarParser(stream)
+        parser.addErrorListener(grammarErrorListener)
         tree = parser.program()
         walker = ParseTreeWalker()
         listener = GrammarListenerImp()
