@@ -19,6 +19,12 @@ class GrammarListenerImp(GrammarListener):
         else:
             return ctx.getText()
 
+    def parseBoolsIns(self,ctx):
+        if ctx.TRUE():
+            return "True"
+        else:
+            return "False"
+
     def parseExpIns(self, ctx):
         text = ""
         if len(ctx.exp()) == 2:
@@ -32,8 +38,10 @@ class GrammarListenerImp(GrammarListener):
         else:
             if ctx.singleExp():
                 text += self.parseSingleExpIns(ctx.singleExp())
+            elif ctx.bools():
+                text+= self.parseBoolsIns(ctx.bools())
             else:
-            # temp
+            # func/number/id/...
                 text += ctx.getText()
         return text
 
@@ -80,6 +88,8 @@ class GrammarListenerImp(GrammarListener):
             self.parseIfSt(ctx.ifSt())
         elif ctx.returnSt():
             self.parseReturnSt(ctx.returnSt())
+        elif ctx.forSt():
+            self.parseForSt(ctx.forSt())
         # break/continue
         else:
             self.add(ctx.getText()[:-1])
@@ -108,6 +118,9 @@ class GrammarListenerImp(GrammarListener):
         self.add(ctx.ID().getText()+' '+ctx.ASSIGN().getText()+' ')
         self.parseExp(ctx.exp())
 
+    def parseSingleExp(self,ctx):
+        print("check")
+        self.add(self.parseSingleExpIns(ctx))
     #todo
     def parseAssignment(self, ctx):
         if ctx.varOpVar():
@@ -133,7 +146,7 @@ class GrammarListenerImp(GrammarListener):
             for i in ctx.expOrEndl()[1:]:
                 self.add(', ')
                 self.parseExpOrEndl(i)
-        self.add(", sep='', end='')\n")
+        self.add(", sep='', end='')")
 
     def parseCinExp(self, ctx):
         self.add(ctx.ID().getText() + " = input()")
@@ -223,6 +236,42 @@ class GrammarListenerImp(GrammarListener):
     def blank(self):
         self.add('\n\n')
 
+    def parseForParamOne(self,ctx):
+        if ctx.varDec():
+            self.parseVarDec(ctx.varDec())
+            self.endl()
+            self.ind()
+        elif ctx.varAssignment():
+            self.parseVarAssignment(ctx.varAssignment())
+            self.endl()
+            self.ind()
+        elif ctx.exp():
+            self.parseExp(ctx.exp())
+            self.endl()
+            self.ind()
+        else:
+            pass
+
+    def parseForParamTwo(self, ctx):
+        if ctx.exp():
+            self.parseExp(ctx.exp())
+        else:
+            self.add("True")
+
+    def parseForParamThree(self,ctx):
+        if ctx.exp():
+            self.parseExp(ctx.exp())
+
+    def parseForSt(self,ctx):
+        self.parseForParamOne(ctx.forParamOne())
+        self.add("while ")
+        self.parseForParamTwo(ctx.forParamTwo())
+        self.parseBlock(ctx.block())
+        self.endl()
+        self.ind()
+        self.add("    ")
+        self.parseForParamThree(ctx.forParamThree())
+
     def enterProgram(self, ctx: GrammarParser.ProgramContext):
         if len(ctx.funcDec()) > 0:
             for i in ctx.funcDec():
@@ -233,160 +282,5 @@ class GrammarListenerImp(GrammarListener):
         self.parseMainFunc(ctx.mainFunc())
 
     def exitProgram(self, ctx: GrammarParser.ProgramContext):
+        self.endl()
         self.add("if __name__ == '__main__':\n  main()")
-
-    def enterMainFunc(self, ctx: GrammarParser.MainFuncContext):
-        pass
-
-    def exitMainFunc(self, ctx: GrammarParser.MainFuncContext):
-        pass
-
-    def enterBlock(self, ctx: GrammarParser.BlockContext):
-        pass
-
-    def exitBlock(self, ctx: GrammarParser.BlockContext):
-        pass
-
-    def enterBlockElement(self, ctx: GrammarParser.BlockElementContext):
-        super().enterBlockElement(ctx)
-
-    def exitBlockElement(self, ctx: GrammarParser.BlockElementContext):
-        super().exitBlockElement(ctx)
-
-    def enterExp(self, ctx: GrammarParser.ExpContext):
-        pass
-
-    def exitExp(self, ctx: GrammarParser.ExpContext):
-        pass
-
-    def enterExpOp(self, ctx: GrammarParser.ExpOpContext):
-        pass
-
-    def exitExpOp(self, ctx: GrammarParser.ExpOpContext):
-        pass
-
-    def enterSingleExp(self, ctx: GrammarParser.SingleExpContext):
-        super().enterSingleExp(ctx)
-
-    def exitSingleExp(self, ctx: GrammarParser.SingleExpContext):
-        super().exitSingleExp(ctx)
-
-    def enterBracketsExp(self, ctx: GrammarParser.BracketsExpContext):
-        pass
-
-    def exitBracketsExp(self, ctx: GrammarParser.BracketsExpContext):
-        pass
-
-    def enterStatement(self, ctx: GrammarParser.StatementContext):
-        super().enterStatement(ctx)
-
-    def exitStatement(self, ctx: GrammarParser.StatementContext):
-        super().exitStatement(ctx)
-
-    def enterIfSt(self, ctx: GrammarParser.IfStContext):
-        pass
-
-    def exitIfSt(self, ctx: GrammarParser.IfStContext):
-        super().exitIfSt(ctx)
-
-    def enterWhileSt(self, ctx: GrammarParser.WhileStContext):
-        pass
-
-    def exitWhileSt(self, ctx: GrammarParser.WhileStContext):
-        super().exitWhileSt(ctx)
-
-    def enterForSt(self, ctx: GrammarParser.ForStContext):
-        super().enterForSt(ctx)
-
-    def exitForSt(self, ctx: GrammarParser.ForStContext):
-        super().exitForSt(ctx)
-
-    def enterReturnSt(self, ctx: GrammarParser.ReturnStContext):
-        super().enterReturnSt(ctx)
-
-    def exitReturnSt(self, ctx: GrammarParser.ReturnStContext):
-        super().exitReturnSt(ctx)
-
-    def enterIdentifierType(self, ctx: GrammarParser.IdentifierTypeContext):
-        super().enterIdentifierType(ctx)
-
-    def exitIdentifierType(self, ctx: GrammarParser.IdentifierTypeContext):
-        super().exitIdentifierType(ctx)
-
-    def enterFuncType(self, ctx: GrammarParser.FuncTypeContext):
-        super().enterFuncType(ctx)
-
-    def exitFuncType(self, ctx: GrammarParser.FuncTypeContext):
-        super().exitFuncType(ctx)
-
-    def enterFuncDec(self, ctx: GrammarParser.FuncDecContext):
-        pass
-
-    def exitFuncDec(self, ctx: GrammarParser.FuncDecContext):
-        pass
-
-    def enterFunc(self, ctx: GrammarParser.FuncContext):
-        super().enterFunc(ctx)
-
-    def exitFunc(self, ctx: GrammarParser.FuncContext):
-        super().exitFunc(ctx)
-
-    def enterAssignment(self, ctx: GrammarParser.AssignmentContext):
-        super().enterAssignment(ctx)
-
-    def exitAssignment(self, ctx: GrammarParser.AssignmentContext):
-        super().exitAssignment(ctx)
-
-    def enterDeclaration(self, ctx: GrammarParser.DeclarationContext):
-        super().enterDeclaration(ctx)
-
-    def exitDeclaration(self, ctx: GrammarParser.DeclarationContext):
-        super().exitDeclaration(ctx)
-
-    def enterVarDec(self, ctx: GrammarParser.VarDecContext):
-        super().enterVarDec(ctx)
-
-    def exitVarDec(self, ctx: GrammarParser.VarDecContext):
-        super().exitVarDec(ctx)
-
-    def enterVarAssignment(self, ctx: GrammarParser.VarAssignmentContext):
-        super().enterVarAssignment(ctx)
-
-    def exitVarAssignment(self, ctx: GrammarParser.VarAssignmentContext):
-        super().exitVarAssignment(ctx)
-
-    def enterVarOp(self, ctx: GrammarParser.VarOpContext):
-        super().enterVarOp(ctx)
-
-    def exitVarOp(self, ctx: GrammarParser.VarOpContext):
-        super().exitVarOp(ctx)
-
-    def enterVarOpVar(self, ctx: GrammarParser.VarOpVarContext):
-        super().enterVarOpVar(ctx)
-
-    def exitVarOpVar(self, ctx: GrammarParser.VarOpVarContext):
-        super().exitVarOpVar(ctx)
-
-    def enterArrayDec(self, ctx: GrammarParser.ArrayDecContext):
-        super().enterArrayDec(ctx)
-
-    def exitArrayDec(self, ctx: GrammarParser.ArrayDecContext):
-        super().exitArrayDec(ctx)
-
-    def enterArrayInit(self, ctx: GrammarParser.ArrayInitContext):
-        super().enterArrayInit(ctx)
-
-    def exitArrayInit(self, ctx: GrammarParser.ArrayInitContext):
-        super().exitArrayInit(ctx)
-
-    def enterArrayAssignment(self, ctx: GrammarParser.ArrayAssignmentContext):
-        super().enterArrayAssignment(ctx)
-
-    def exitArrayAssignment(self, ctx: GrammarParser.ArrayAssignmentContext):
-        super().exitArrayAssignment(ctx)
-
-    def enterParams(self, ctx: GrammarParser.ParamsContext):
-        pass
-
-    def exitParams(self, ctx: GrammarParser.ParamsContext):
-        pass

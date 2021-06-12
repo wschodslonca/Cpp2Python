@@ -24,16 +24,16 @@
 # cinExp
 # : CIN ID SEMICOLON;
 
-exp
+# exp
 # : exp expOp exp
-| NUMBER
-| ID
-| func
+# | NUMBER
+# | ID
+# | func
 # | LEFT_BRACKET exp RIGHT_BRACKET
-| singleExp
-| APOSTROPHE CHARACTER APOSTROPHE
-| QUOTE TEXT QUOTE
-| BOOLS;
+# | singleExp
+# | APOSTROPHE CHARACTER APOSTROPHE
+# | QUOTE TEXT QUOTE
+# | bools;
 
 # expOp
 # : PLUS
@@ -50,22 +50,21 @@ exp
 # | NOT_EQ
 # | EQ;
 
-singleExp
-: NOT ID
-| (PP|MM) ID
-| ID (PP|MM);
+# singleExp
+# : NOT ID
+# | (PP|MM) ID
+# | ID (PP|MM);
 
 # bracketsExp
 # : LEFT_BRACKET exp RIGHT_BRACKET;
 
-statement
+# statement
 # : ifSt
-| forSt
+# | forSt
 # | whileSt
 # | returnSt
-| BREAK SEMICOLON
-| CONTINUE SEMICOLON
-| block;
+# | BREAK SEMICOLON
+# | CONTINUE SEMICOLON
 
 # ifSt
 # : IF bracketsExp block (ELSE_IF bracketsExp block)* (ELSE block)?;
@@ -73,8 +72,8 @@ statement
 # whileSt
 # : WHILE bracketsExp block;
 
-forSt
-: FOR LEFT_BRACKET (varDec|varAssignment|exp)? SEMICOLON exp? SEMICOLON exp? RIGHT_BRACKET block;
+# forSt
+# : FOR LEFT_BRACKET (varDec|varAssignment|exp)? SEMICOLON exp? SEMICOLON exp? RIGHT_BRACKET block;
 
 # returnSt
 # : RETURN exp SEMICOLON;
@@ -95,13 +94,13 @@ forSt
 # funcDec
 # : funcType ID LEFT_BRACKET params? RIGHT_BRACKET block;
 
-func
-: ID LEFT_BRACKET exp (COMMA exp)* RIGHT_BRACKET;
+# ??????????????????????
+# func
+# : ID LEFT_BRACKET exp (COMMA exp)* RIGHT_BRACKET;
 
 assignment
-: varAssignment
+# : varAssignment
 | arrayAssignment
-| singleExp
 # | varOpVar;
 
 declaration
@@ -111,8 +110,8 @@ declaration
 # varDec
 # : identifierType ID (ASSIGN exp)? SEMICOLON;
 
-varAssignment
-: ID ASSIGN exp;
+# varAssignment
+# : ID ASSIGN exp;
 
 # varOp
 # : PEQ

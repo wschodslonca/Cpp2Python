@@ -41,7 +41,7 @@ def main():
     translator.import_code_file()
     translator.cpp2py()
     translator.write_to_output()
-    #os.system('output.py')
+    os.system('output.py')
 
 
 if __name__ == '__main__':

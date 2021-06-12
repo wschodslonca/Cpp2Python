@@ -26,6 +26,15 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#number.
+    def enterNumber(self, ctx:GrammarParser.NumberContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#number.
+    def exitNumber(self, ctx:GrammarParser.NumberContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#block.
     def enterBlock(self, ctx:GrammarParser.BlockContext):
         pass
@@ -68,6 +77,15 @@ class GrammarListener(ParseTreeListener):
 
     # Exit a parse tree produced by GrammarParser#cinExp.
     def exitCinExp(self, ctx:GrammarParser.CinExpContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#bools.
+    def enterBools(self, ctx:GrammarParser.BoolsContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#bools.
+    def exitBools(self, ctx:GrammarParser.BoolsContext):
         pass
 
 
@@ -140,6 +158,33 @@ class GrammarListener(ParseTreeListener):
 
     # Exit a parse tree produced by GrammarParser#whileSt.
     def exitWhileSt(self, ctx:GrammarParser.WhileStContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#forParamOne.
+    def enterForParamOne(self, ctx:GrammarParser.ForParamOneContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#forParamOne.
+    def exitForParamOne(self, ctx:GrammarParser.ForParamOneContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#forParamTwo.
+    def enterForParamTwo(self, ctx:GrammarParser.ForParamTwoContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#forParamTwo.
+    def exitForParamTwo(self, ctx:GrammarParser.ForParamTwoContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#forParamThree.
+    def enterForParamThree(self, ctx:GrammarParser.ForParamThreeContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#forParamThree.
+    def exitForParamThree(self, ctx:GrammarParser.ForParamThreeContext):
         pass
 
 

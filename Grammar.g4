@@ -37,7 +37,6 @@ MULEQ : '*=';
 DIVEQ : '/=';
 DARRL: '<<';
 DARRR: '>>';
-NUMBER : MINUS? (NATURAL | (NATURAL DOT NATURAL));
 INT : 'int';
 FLOAT : 'float';
 DOUBLE : 'double';
@@ -59,16 +58,18 @@ TRUE : 'true';
 FALSE : 'false';
 COUT: 'cout';
 CIN: 'cin';
-BOOLS : TRUE | FALSE;
 ENDL: 'endl';
-DIGIT : [0-9];
-NATURAL : '0' | ([1-9][0-9]*);
-ID : NONDIGIT CHARACTER*;
-NONDIGIT: [a-zA-Z_];
-CHARACTER : DIGIT|NONDIGIT;
-TEXT : CHARACTER+;
 INCLUDE : '#include<iostream>';
 STD : 'using namespace std;';
+ID: [a-zA-Z_][0-9a-zA-Z_]*;
+fragment NONDIGIT: [a-zA-Z_];
+fragment DIGIT : [0-9];
+CHARACTER: '\'' ( DIGIT| NONDIGIT) '\'';
+TEXT: '"' ( '\\"' | . )*? '"';
+PINT: '0' | ([1-9][0-9]*);
+NINT: MINUS PINT;
+PFLOAT: PINT DOT DIGIT+;
+NFLOAT: MINUS PFLOAT;
 WS : [ \t\r\n]+ -> skip ;
 COMM : '//' ~ [\r\n]*;
 
@@ -77,6 +78,12 @@ program
 
 mainFunc
 : INT MAIN LEFT_BRACKET VOID? RIGHT_BRACKET block;
+
+number
+: PINT
+| NINT
+| PFLOAT
+| NFLOAT;
 
 block
 : CURLY_LEFT_BRACKET blockElement* CURLY_RIGHT_BRACKET;
@@ -99,16 +106,20 @@ coutExp
 cinExp
 : CIN DARRR ID SEMICOLON;
 
+bools
+: TRUE
+| FALSE;
+
 exp
-: exp expOp exp
-| NUMBER
+: TEXT
+| CHARACTER
+| exp expOp exp
+| number
 | ID
 | func
 | LEFT_BRACKET exp RIGHT_BRACKET
 | singleExp
-| APOSTROPHE CHARACTER APOSTROPHE
-| QUOTE TEXT QUOTE
-| BOOLS;
+| bools;
 
 expOp
 : PLUS
@@ -143,8 +154,7 @@ statement
 | whileSt
 | returnSt
 | BREAK SEMICOLON
-| CONTINUE SEMICOLON
-| block;
+| CONTINUE SEMICOLON;
 
 ifSt
 : IF bracketsExp block (ELSE_IF bracketsExp block)* (ELSE block)?;
@@ -152,8 +162,17 @@ ifSt
 whileSt
 : WHILE bracketsExp block;
 
+forParamOne
+: (varDec | varAssignment | (exp? SEMICOLON));
+
+forParamTwo
+: exp? SEMICOLON;
+
+forParamThree
+: exp?;
+
 forSt
-: FOR LEFT_BRACKET (varDec|varAssignment|exp)? SEMICOLON exp? SEMICOLON exp? RIGHT_BRACKET block;
+: FOR LEFT_BRACKET forParamOne forParamTwo forParamThree RIGHT_BRACKET block;
 
 returnSt
 : RETURN exp SEMICOLON;
@@ -180,7 +199,6 @@ func
 assignment
 : varAssignment
 | arrayAssignment
-| singleExp
 | varOpVar;
 
 declaration
@@ -203,13 +221,13 @@ varOpVar
 : ID varOp ID SEMICOLON;
 
 arrayDec
-: identifierType ID SQR_LEFT_BRACKET NATURAL? SQR_RIGHT_BRACKET (ASSIGN arrayInit)? SEMICOLON;
+: identifierType ID SQR_LEFT_BRACKET PINT? SQR_RIGHT_BRACKET (ASSIGN arrayInit)? SEMICOLON;
 
 arrayInit
 : CURLY_LEFT_BRACKET exp (COMMA exp)* CURLY_RIGHT_BRACKET;
 
 arrayAssignment
-: ID SQR_LEFT_BRACKET NATURAL SQR_RIGHT_BRACKET ASSIGN exp;
+: ID SQR_LEFT_BRACKET PINT SQR_RIGHT_BRACKET ASSIGN exp;
 
 params
 : identifierType ID (COMMA identifierType ID)*;
