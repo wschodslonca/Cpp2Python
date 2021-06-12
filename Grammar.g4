@@ -114,6 +114,7 @@ exp
 | exp expOp exp
 | number
 | ID
+| ID sqr
 | func
 | LEFT_BRACKET exp RIGHT_BRACKET
 | singleExp
@@ -186,6 +187,7 @@ identifierType
 
 funcType
 : identifierType
+| identifierType sqrEmpty
 | VOID;
 
 funcDec
@@ -228,5 +230,11 @@ arrayInit
 arrayAssignment
 : ID SQR_LEFT_BRACKET PINT SQR_RIGHT_BRACKET ASSIGN exp SEMICOLON;
 
+sqrEmpty
+: SQR_LEFT_BRACKET SQR_RIGHT_BRACKET;
+
+sqr
+: SQR_LEFT_BRACKET (PINT | ID) SQR_RIGHT_BRACKET;
+
 params
-: identifierType ID (COMMA identifierType ID)*;
+: identifierType ID sqrEmpty? (COMMA identifierType ID sqrEmpty?)*;

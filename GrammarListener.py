@@ -323,6 +323,24 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#sqrEmpty.
+    def enterSqrEmpty(self, ctx:GrammarParser.SqrEmptyContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#sqrEmpty.
+    def exitSqrEmpty(self, ctx:GrammarParser.SqrEmptyContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#sqr.
+    def enterSqr(self, ctx:GrammarParser.SqrContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#sqr.
+    def exitSqr(self, ctx:GrammarParser.SqrContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#params.
     def enterParams(self, ctx:GrammarParser.ParamsContext):
         pass
