@@ -72,7 +72,11 @@ WS : [ \t\r\n]+ -> skip ;
 COMM : '//' ~ [\r\n]*;
 
 program
-: INCLUDE STD funcDec* varDec* mainFunc EOF;
+: INCLUDE STD programElement* mainFunc EOF;
+
+programElement
+: funcDec
+| varDec;
 
 mainFunc
 : INT MAIN LEFT_BRACKET VOID? RIGHT_BRACKET block;

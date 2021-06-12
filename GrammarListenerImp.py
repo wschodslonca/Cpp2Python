@@ -293,12 +293,11 @@ class GrammarListenerImp(GrammarListener):
         self.parseForParamThree(ctx.forParamThree())
 
     def enterProgram(self, ctx: GrammarParser.ProgramContext):
-        if len(ctx.funcDec()) > 0:
-            for i in ctx.funcDec():
-                self.parseFuncDec(i)
-        if len(ctx.varDec()) > 0:
-            for i in ctx.varDec():
-                self.parseVarDec(i)
+        for i in ctx.programElement():
+            if i.funcDec():
+                self.parseFuncDec(i.funcDec())
+            elif i.varDec():
+                self.parseVarDec(i.varDec())
         self.parseMainFunc(ctx.mainFunc())
 
     def exitProgram(self, ctx: GrammarParser.ProgramContext):
