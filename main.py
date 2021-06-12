@@ -8,22 +8,34 @@ import sys
 
 class Translator:
     # Class that converts .cpp to .py
-    def __init__(self,from_file,to_file):
-        self.input_path = "workspace\\"+from_file
-        self.relative_input_path = from_file
-        self.relative_result_file = to_file
+    def __init__(self):
+        self.workspace_path = "workspace\\"
         self.input_file = None
-        self.result_file = "workspace\\"+to_file
+        self.result_file = None
         self.input_code = ""
         self.translated_code = ""
 
-    def import_code_file(self):
-        self.input_file = open(self.input_path, "rt")
-        self.input_code = self.input_file.read()
+    def load_file(self):
+        if len(sys.argv)>1:
+            if sys.argv[1][-4:]=='.cpp':
+                self.input_file = sys.argv[1]
+                self.result_file = sys.argv[1][0:-4] + '.py'
+                return True
+            else:
+                print('input file is not .cpp type...')
+                return False
+        else:
+            print('missing input file...')
+            return False
+
+
+    def import_code(self):
+        input_file = open(self.workspace_path+self.input_file, "rt")
+        self.input_code = input_file.read()
 
     def write_to_output(self):
-        output = open(self.result_file, "w")
-        output.write('# from '+self.relative_input_path+' to '+self.relative_result_file+'\n')
+        output = open(self.workspace_path+self.result_file, "w")
+        output.write('# from ' + self.input_file + ' to ' + self.result_file + '\n')
         output.write(self.translated_code)
         output.close()
 
@@ -37,14 +49,17 @@ class Translator:
         walker.walk(listener, tree)
         self.translated_code = listener.c
 
+    def run_output(self):
+        os.system(self.workspace_path+self.result_file)
+
 
 def main():
-    translator = Translator(sys.argv[1],sys.argv[1][:-4]+".py")
-    translator.import_code_file()
-    translator.cpp2py()
-    translator.write_to_output()
-    os.system(translator.result_file)
-
+        translator = Translator()
+        if translator.load_file():
+            translator.import_code()
+            translator.cpp2py()
+            translator.write_to_output()
+            translator.run_output()
 
 if __name__ == '__main__':
     main()
