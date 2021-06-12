@@ -9,9 +9,11 @@ import sys
 class Translator:
     # Class that converts .cpp to .py
     def __init__(self,from_file,to_file):
-        self.input_path = from_file
+        self.input_path = "workspace\\"+from_file
+        self.relative_input_path = from_file
+        self.relative_result_file = to_file
         self.input_file = None
-        self.result_file = to_file
+        self.result_file = "workspace\\"+to_file
         self.input_code = ""
         self.translated_code = ""
 
@@ -21,7 +23,7 @@ class Translator:
 
     def write_to_output(self):
         output = open(self.result_file, "w")
-        output.write('# from '+self.input_path+' to '+self.result_file+'\n')
+        output.write('# from '+self.relative_input_path+' to '+self.relative_result_file+'\n')
         output.write(self.translated_code)
         output.close()
 
@@ -37,11 +39,11 @@ class Translator:
 
 
 def main():
-    translator = Translator(sys.argv[1],"output.py")
+    translator = Translator(sys.argv[1],sys.argv[1][:-4]+".py")
     translator.import_code_file()
     translator.cpp2py()
     translator.write_to_output()
-    os.system('output.py')
+    os.system(translator.result_file)
 
 
 if __name__ == '__main__':

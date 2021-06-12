@@ -303,4 +303,4 @@ class GrammarListenerImp(GrammarListener):
 
     def exitProgram(self, ctx: GrammarParser.ProgramContext):
         self.endl()
-        self.add("if __name__ == '__main__':\n  main()")
+        self.add("if __name__ == '__main__':\n    main()\n")
