@@ -67,9 +67,7 @@ fragment DIGIT : [0-9];
 CHARACTER: '\'' ( DIGIT| NONDIGIT) '\'';
 TEXT: '"' ( '\\"' | . )*? '"';
 PINT: '0' | ([1-9][0-9]*);
-NINT: MINUS PINT;
 PFLOAT: PINT DOT DIGIT+;
-NFLOAT: MINUS PFLOAT;
 WS : [ \t\r\n]+ -> skip ;
 COMM : '//' ~ [\r\n]*;
 
@@ -81,9 +79,9 @@ mainFunc
 
 number
 : PINT
-| NINT
+| MINUS PINT
 | PFLOAT
-| NFLOAT;
+| MINUS PFLOAT;
 
 block
 : CURLY_LEFT_BRACKET blockElement* CURLY_RIGHT_BRACKET;
@@ -221,13 +219,14 @@ varOpVar
 : ID varOp ID SEMICOLON;
 
 arrayDec
-: identifierType ID SQR_LEFT_BRACKET PINT? SQR_RIGHT_BRACKET (ASSIGN arrayInit)? SEMICOLON;
+: identifierType ID SQR_LEFT_BRACKET PINT? SQR_RIGHT_BRACKET ASSIGN arrayInit SEMICOLON
+| identifierType ID SQR_LEFT_BRACKET PINT SQR_RIGHT_BRACKET SEMICOLON;
 
 arrayInit
 : CURLY_LEFT_BRACKET exp (COMMA exp)* CURLY_RIGHT_BRACKET;
 
 arrayAssignment
-: ID SQR_LEFT_BRACKET PINT SQR_RIGHT_BRACKET ASSIGN exp;
+: ID SQR_LEFT_BRACKET PINT SQR_RIGHT_BRACKET ASSIGN exp SEMICOLON;
 
 params
 : identifierType ID (COMMA identifierType ID)*;

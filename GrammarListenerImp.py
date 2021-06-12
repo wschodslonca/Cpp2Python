@@ -8,18 +8,18 @@ class GrammarListenerImp(GrammarListener):
         self.c = ""
         self.indParam = 0
 
-    def parseSingleExpIns(self,ctx):
+    def parseSingleExpIns(self, ctx):
         if ctx.incOp():
             if ctx.incOp().PP():
-                return ctx.ID().getText()+' += 1'
+                return ctx.ID().getText() + ' += 1'
             else:
-                return ctx.ID().getText()+' -= 1'
+                return ctx.ID().getText() + ' -= 1'
         elif ctx.NOT():
-            return 'not '+ctx.ID().getText()
+            return 'not ' + ctx.ID().getText()
         else:
             return ctx.getText()
 
-    def parseBoolsIns(self,ctx):
+    def parseBoolsIns(self, ctx):
         if ctx.TRUE():
             return "True"
         else:
@@ -39,9 +39,9 @@ class GrammarListenerImp(GrammarListener):
             if ctx.singleExp():
                 text += self.parseSingleExpIns(ctx.singleExp())
             elif ctx.bools():
-                text+= self.parseBoolsIns(ctx.bools())
+                text += self.parseBoolsIns(ctx.bools())
             else:
-            # func/number/id/...
+                # func/number/id/...
                 text += ctx.getText()
         return text
 
@@ -49,14 +49,12 @@ class GrammarListenerImp(GrammarListener):
         self.add(self.parseExpIns(ctx))
 
     def parseExpOp(self, ctx):
-        # if isinstance(ctx,GrammarParser.AND):
         if ctx.AND():
             return " and "
-        # elif isinstance(ctx,GrammarParser.OR):
         elif ctx.OR():
             return " or "
         else:
-            return ' '+ctx.getText()+' '
+            return ' ' + ctx.getText() + ' '
 
     def parseFuncDec(self, ctx):
         self.endl()
@@ -71,7 +69,6 @@ class GrammarListenerImp(GrammarListener):
         self.parseBlock(ctx.block())
         self.blank()
 
-    # todo
     def parseVarDec(self, ctx):
         self.add(ctx.ID().getText())
         if ctx.ASSIGN():
@@ -80,7 +77,6 @@ class GrammarListenerImp(GrammarListener):
         else:
             self.add(" = None")
 
-    # todo
     def parseStatement(self, ctx):
         if ctx.whileSt():
             self.parseWhileSt(ctx.whileSt())
@@ -98,40 +94,64 @@ class GrammarListenerImp(GrammarListener):
         self.add(ctx.RETURN().getText() + " ")
         self.parseExp(ctx.exp())
 
-    # todo
+    def parseArrayInit(self, ctx):
+        self.parseExp(ctx.exp()[0])
+        for i in ctx.exp()[1:]:
+            self.add(', ')
+            self.parseExp(i)
+
+    def parseArrayDec(self, ctx):
+        self.add(ctx.ID().getText() + ' = [')
+        if ctx.arrayInit():
+            self.parseArrayInit(ctx.arrayInit())
+        else:
+            if ctx.PINT():
+                self.add('0 for _ in range(' + ctx.PINT().getText() + ')')
+            else:
+                pass
+        self.add(']')
+
     def parseDeclaration(self, ctx):
         if ctx.varDec():
             self.parseVarDec(ctx.varDec())
+        elif ctx.arrayDec():
+            self.parseArrayDec(ctx.arrayDec())
         # todo
         else:
             pass
 
     def parseVarOp(self, ctx):
-        self.add(" "+ctx.getText()+" ")
+        self.add(" " + ctx.getText() + " ")
 
     def parseVarOpVar(self, ctx):
         self.add(ctx.ID()[0].getText())
         self.parseVarOp(ctx.varOp())
         self.add(ctx.ID()[1].getText())
 
-    def parseVarAssignment(self,ctx):
-        self.add(ctx.ID().getText()+' '+ctx.ASSIGN().getText()+' ')
+    def parseVarAssignment(self, ctx):
+        self.add(ctx.ID().getText() + ' ' + ctx.ASSIGN().getText() + ' ')
         self.parseExp(ctx.exp())
 
-    def parseSingleExp(self,ctx):
+    def parseSingleExp(self, ctx):
         print("check")
         self.add(self.parseSingleExpIns(ctx))
-    #todo
+
+    def parseArrayAssignment(self, ctx):
+        self.add(ctx.ID().getText() + "[" + ctx.PINT().getText() + "] = ")
+        self.parseExp(ctx.exp())
+
     def parseAssignment(self, ctx):
         if ctx.varOpVar():
             self.parseVarOpVar(ctx.varOpVar())
         elif ctx.varAssignment():
             self.parseVarAssignment(ctx.varAssignment())
+        elif ctx.arrayAssignment():
+            self.parseArrayAssignment(ctx.arrayAssignment())
         # todo
         else:
             pass
 
-    def parseExpOrEndl(self,ctx):
+    def parseExpOrEndl(self, ctx):
         if ctx.exp():
             self.parseExp(ctx.exp())
         elif ctx.ENDL():
@@ -151,8 +171,8 @@ class GrammarListenerImp(GrammarListener):
     def parseCinExp(self, ctx):
         self.add(ctx.ID().getText() + " = input()")
 
-    def parseCommToken(self,ctx):
-        self.add('#'+ctx.getText()[2:])
+    def parseCommToken(self, ctx):
+        self.add('#' + ctx.getText()[2:])
 
     # todo
     def parseBlockElement(self, ctx):
@@ -236,7 +256,7 @@ class GrammarListenerImp(GrammarListener):
     def blank(self):
         self.add('\n\n')
 
-    def parseForParamOne(self,ctx):
+    def parseForParamOne(self, ctx):
         if ctx.varDec():
             self.parseVarDec(ctx.varDec())
             self.endl()
@@ -258,11 +278,11 @@ class GrammarListenerImp(GrammarListener):
         else:
             self.add("True")
 
-    def parseForParamThree(self,ctx):
+    def parseForParamThree(self, ctx):
         if ctx.exp():
             self.parseExp(ctx.exp())
 
-    def parseForSt(self,ctx):
+    def parseForSt(self, ctx):
         self.parseForParamOne(ctx.forParamOne())
         self.add("while ")
         self.parseForParamTwo(ctx.forParamTwo())
