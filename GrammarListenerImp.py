@@ -297,7 +297,9 @@ class GrammarListenerImp(GrammarListener):
             if i.funcDec():
                 self.parseFuncDec(i.funcDec())
             elif i.varDec():
+                self.endl()
                 self.parseVarDec(i.varDec())
+                self.blank()
         self.parseMainFunc(ctx.mainFunc())
 
     def exitProgram(self, ctx: GrammarParser.ProgramContext):
